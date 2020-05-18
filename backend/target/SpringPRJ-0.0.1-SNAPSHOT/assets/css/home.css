@@ -1,0 +1,122 @@
+@import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap");
+
+body {
+  font-family: "Do Hyeon", sans-serif !important;
+  background-color: #08298a;
+  width: 100%;
+}
+
+.wrapper {
+  width: 600px;
+  height: 200px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -100px;
+  margin-left: -300px;
+  text-align: center;
+  color: white;
+}
+
+@media screen and (max-width: 376px) {
+  .wrapper {
+    width: 360px;
+    height: 300px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -150px;
+    margin-left: -180px;
+    text-align: center;
+    color: white;
+  }
+}
+
+p.typing-txt {
+  display: none;
+}
+
+.typing {
+  display: inline-block;
+  font-size: 5em;
+}
+
+@media screen and (min-width: 377px) {
+  .typing {
+    /*       position: absolute;*/
+    display: inline-block;
+    animation-name: cursor;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+    font-size: 5em;
+  }
+}
+
+@keyframes cursor {
+  0% {
+    border-right: 1px solid #fff;
+  }
+  50% {
+    border-right: 1px solid #000;
+  }
+  100% {
+    border-right: 1px solid #fff;
+  }
+}
+
+#jbtn {
+  display: none;
+  margin: 0 auto;
+}
+
+/* Modal Title */
+.container {
+  padding: 2rem 0rem;
+}
+
+@media (min-width: 576px) {
+  .modal-dialog {
+    max-width: 400px;
+
+    .modal-content {
+      padding: 1rem;
+    }
+  }
+}
+
+.modal-header {
+  .close {
+    margin-top: -1.5rem;
+  }
+}
+
+.form-title {
+  margin: -2rem 0rem 2rem;
+}
+
+.btn-round {
+  border-radius: 3rem;
+}
+
+.delimiter {
+  padding: 1rem;
+}
+
+.social-buttons {
+  .btn {
+    margin: 0 0.5rem 1rem;
+  }
+}
+
+.signup-section {
+  padding: 0.3rem 0rem;
+}
+
+.logintitle {
+  color: #08298a;
+}
+
+.vm{
+  color: red;
+  font-size: 0.8em;
+}
