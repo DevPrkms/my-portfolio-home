@@ -1,5 +1,10 @@
+<%@ page import="poly.util.CmmUtil" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8"%>
+<%
+    String userNm = CmmUtil.nvl((String)session.getAttribute("userName"));
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,6 +44,10 @@
             $("#idm").hide();
             $("#pwm").hide();
         })
+    </script>
+
+    <script>
+        var sessionuserName = '<%=userNm%>';
     </script>
 </head>
 <body onload="typejs()">
@@ -95,7 +104,7 @@
     </div>
 
     <!-- vaild js -->
-    <script src="/assets/js/vaild.js?v=1.5"></script>
+    <script src="/assets/js/vaild.js?v=1.6"></script>
 
     <!-- bootstrap js load -->
     <script

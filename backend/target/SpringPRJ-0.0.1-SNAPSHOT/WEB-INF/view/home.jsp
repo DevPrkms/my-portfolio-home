@@ -1,5 +1,10 @@
+<%@ page import="poly.util.CmmUtil" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8"%>
+<%
+    String userNm = CmmUtil.nvl((String)session.getAttribute("userName"));
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,6 +45,10 @@
             $("#pwm").hide();
         })
     </script>
+
+    <script>
+        var sessionuserName = '<%=userNm%>';
+    </script>
 </head>
 <body onload="typejs()">
 <div class="wrapper">
@@ -75,7 +84,7 @@
                     <form>
                         <div class="form-group">
                             <input type="email" class="form-control" id="userName"placeholder="계정을 입력해주세요.">
-                            <span id="idm" class="vm">ㅇㅁㄴㅇㄴㅁㅇ</span>
+                            <span id="idm" class="vm"></span>
                         </div>
                         <div class="form-group">
                             <input type="password" class="form-control" id="userPassword" placeholder="비밀번호를 입력해주세요.">
@@ -95,7 +104,7 @@
     </div>
 
     <!-- vaild js -->
-    <script src="/assets/js/vaild.js?v=1.5"></script>
+    <script src="/assets/js/vaild.js?v=1.6"></script>
 
     <!-- bootstrap js load -->
     <script

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="poly.persistance.mapper.IHomeMapper">
+    <select id="userLogin" parameterType="UserDTO" resultType="UserDTO">
+		SELECT
+			USER_NO AS user_no,
+			USER_ID AS user_id,
+			USER_PASSWORD AS user_password,
+			USER_NAME AS user_name,
+			USER_EMAIL AS user_email,
+			USER_PHONE AS user_phone
+		FROM
+			USER_INFO
+		WHERE
+			USER_ID = #{user_id}
+		AND
+			USER_PASSWORD = #{user_password}
+	</select>
+
+</mapper>

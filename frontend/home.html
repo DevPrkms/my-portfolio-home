@@ -1,101 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Portfolio</title>
-
-    <!-- jQuery load -->
-    <script
-      src="https://code.jquery.com/jquery-3.5.0.js"
-      integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc="
-      crossorigin="anonymous"
-    ></script>
-
-    <!-- font-awesome -->
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
-  />
-
-    <!-- bootstrap CSS load -->
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-      crossorigin="anonymous"
-    />
-
-    <!-- 타이핑 js -->
-    <script src="assets/js/type.js"></script>
-
-    <!-- page CSS -->
-    <link rel="stylesheet" href="./assets/css/home.css" />
-  </head>
-  <body onload="typejs()">
-    <div class="wrapper">
-      <!-- Main 타이핑 부분 -->
-      <p class="typing-txt">My Portfolio</p>
-      <p class="typing"></p>
-
-      <!-- Modal login -->
-
-      <button
-        id="jbtn"
-        class="btn btn-outline-light btn-round btn-lg"
-        type="button"
-        data-toggle="modal"
-        data-target="#loginModal"
-      >
-        Join
-      </button>
-    </div>
-    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header border-bottom-0">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="form-title text-center">
-              <h4 class="logintitle">로그인</h4>
-            </div>
-            <div class="d-flex flex-column text-center">
-              <form>
-                <div class="form-group">
-                  <input type="email" class="form-control" id="userName"placeholder="계정을 입력해주세요.">
-                </div>
-                <div class="form-group">
-                  <input type="password" class="form-control" id="userPassword" placeholder="비밀번호를 입력해주세요.">
-                </div>
-                <button type="button" class="btn btn-info btn-block btn-round" id="loginbtn">로그인</button>
-              </form>
-              <div class="d-flex justify-content-center social-buttons">
-              </di>
-            </div>
-          </div>
-        </div>
-          <div class="modal-footer d-flex justify-content-center">
-            <div class="signup-section">계정이 없으신가요? <a href="#a" class="text-info"> 회원가입</a></div>
-          </div>
-        </div>
-    </div>
-
-    <!-- vaild js -->
-    <script src="./assets/js/vaild.js"></script>
-
-    <!-- bootstrap js load -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <style>
+    .link {
+    stroke: #666;
+    opacity: 0.6;
+    stroke-width: 1.5px;
+    }
+    .node circle {
+    stroke: #fff;
+    opacity: 0.6;
+    stroke-width: 1.5px;
+    }
+    text {
+    font: 7px serif;
+    opacity: 0.6;
+    pointer-events: none;
+    }
+    </style>
+    
+    <script src=http://d3js.org/d3.v3.min.js></script>
+    
+    <script> 
+     var links = [ { "source" : "�ѱ�", "target" : "�ѱ�" }, { "source" : "Jessica Lange", "target" : "�ѱ�" }, { "source" : "Winona Ryder", "target" : "Jessica Lange" }, { "source" : "Michelle Pfeiffer", "target" : "Winona Ryder" }, { "source" : "Whoopi Goldberg", "target" : "Winona Ryder" }, { "source" : "Emma Thompson", "target" : "Angela Bassett" }, { "source" : "Julia Roberts", "target" : "Emma Thompson" }, { "source" : "Sharon Stone", "target" : "Julia Roberts" }, { "source" : "Meryl Streep", "target" : "Angela Bassett" }, { "source" : "Susan Sarandon", "target" : "Meryl Streep" }, { "source" : "Nicole Kidman", "target" : "Susan Sarandon" } ] ; 
+     var nodes = {}
+    
+    // Compute the distinct nodes from the links.
+    links.forEach(function(link) {
+    link.source = nodes[link.source] ||
+    (nodes[link.source] = {name: link.source});
+    link.target = nodes[link.target] ||
+    (nodes[link.target] = {name: link.target});
+    link.value = +link.value;
+    });
+    
+    var width = 600
+    height = 600;
+    
+    var force = d3.layout.force()
+    .nodes(d3.values(nodes))
+    .links(links)
+    .size([width, height])
+    .linkDistance(50)
+    .charge(-200)
+    .on("tick", tick)
+    .start();
+    
+    var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+    
+    var link = svg.selectAll(".link")
+    .data(force.links())
+    .enter().append("line")
+    .attr("class", "link");
+    
+    var node = svg.selectAll(".node")
+    .data(force.nodes())
+    .enter().append("g")
+    .attr("class", "node")
+    .on("mouseover", mouseover)
+    .on("mouseout", mouseout)
+    .on("click", click)
+    .on("dblclick", dblclick)
+    .call(force.drag);
+    
+    node.append("circle")
+    .attr("r", 8)
+    .style("fill", "#3182bd");
+    
+    node.append("text")
+    .attr("x", 12)
+    .attr("dy", ".35em")
+    .style("fill", "#3182bd")
+    .text(function(d) { return d.name; });
+    
+    function tick() {
+    link
+    .attr("x1", function(d) { return d.source.x; })
+    .attr("y1", function(d) { return d.source.y; })
+    .attr("x2", function(d) { return d.target.x; })
+    .attr("y2", function(d) { return d.target.y; });
+    
+    node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+    }
+    
+    function mouseover() {
+    d3.select(this).select("circle").transition()
+    .duration(750)
+    .attr("r", 16);
+    }
+    
+    function mouseout() {
+    d3.select(this).select("circle").transition()
+    .duration(750)
+    .attr("r", 8);
+    }
+    // action to take on mouse click
+    function click() {
+    d3.select(this).select("text").transition()
+    .duration(750)
+    .attr("x", 22)
+    .style("stroke-width", ".5px")
+    .style("opacity", 1)
+    .style("fill", "#E34A33")
+    .style("font", "17.5px serif");
+    d3.select(this).select("circle").transition()
+    .duration(750)
+    .style("fill", "#E34A33")
+    .attr("r", 16)
+    }
+    
+    // action to take on mouse double click
+    function dblclick() {
+    d3.select(this).select("circle").transition()
+    .duration(750)
+    .attr("r", 6)
+    .style("fill", "#E34A33");
+    d3.select(this).select("text").transition()
+    .duration(750)
+    .attr("x", 12)
+    .style("stroke", "none")
+    .style("fill", "#E34A33")
+    .style("stroke", "none")
+    .style("opacity", 0.6)
+    .style("font", "7px serif");
+    }
+    
+    </script>
+</body>
 </html>
