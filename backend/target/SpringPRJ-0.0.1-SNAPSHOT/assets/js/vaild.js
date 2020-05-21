@@ -46,26 +46,7 @@ $("#loginbtn").click(function () {
         alert("비밀번호가 올바르지 않습니다.");
         $("#userPassword").focus();
     } else if (nidx == 1 && pidx == 1) {
-        $.ajax({
-            async: true,
-            type: 'POST',
-            data: {'userName': userName, 'userPassword': userPassword},
-            url: "/userLogin.do",
-            success: function (data) {
-                if (data == null) {
-                    alert("입력하신 정보가 서버에 없습니다.");
-                    $("#userName").focus();
-                } else {
-                    var userNm = sessionuserName;
-                    alert(userNm + "님 환영합니다.");
-                    location.href="/main.do";
-                }
-            }
-            ,
-            error: function (error) {
-                alert("error : " + error);
-            }
-        });
+        $("#loginform").submit();
     }
 
     console.log("userName : " + userName + ", userPassword : " + userPassword);

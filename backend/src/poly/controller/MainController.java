@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import poly.dto.UserDTO;
 import poly.service.IHomeService;
 import poly.service.impl.HomeService;
+import poly.util.CmmUtil;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -25,8 +26,9 @@ public class MainController {
     private IHomeService homeservice;
 
     @RequestMapping(value = "home")
-    public String index() {
+    public String index(HttpSession session) {
         log.info(this.getClass().getName() + " : home 호출");
+        session.invalidate();
         return "/home";
     }
 
@@ -37,11 +39,10 @@ public class MainController {
     }
 
     @RequestMapping(value = "userLogin")
-    @ResponseBody
     public String userLogin(HttpServletRequest request, HttpSession session, Model model) throws Exception {
         log.info(this.getClass().getName() + " : userLogin 호출");
 
-        String referer = request.getHeader("REFERER");
+        String referer = CmmUtil.nvl((String)request.getHeader("REFERER"));
 
         String userId = request.getParameter("userName");
         String userPassword = request.getParameter("userPassword");
@@ -51,22 +52,21 @@ public class MainController {
         uDTO.setUser_password(userPassword);
 
         uDTO = homeservice.userLogin(uDTO);
-        String userNo = uDTO.getUser_no();
-        userId = uDTO.getUser_id();
-        String userName = uDTO.getUser_name();
-        String userEmail = uDTO.getUser_email();
-        String userPhone = uDTO.getUser_phone();
 
         if (uDTO == null) {
-            return "0";
+            model.addAttribute("msg", "입력하신 정보가 서버에 없습니다.");
+            model.addAttribute("url", referer);
         } else {
-            session.setAttribute("userNo", userNo);
-            session.setAttribute("userId", userId);
-            session.setAttribute("userName", userName);
-            session.setAttribute("userEmail", userEmail);
-            session.setAttribute("userPhone", userPhone);
-            return "1";
+            model.addAttribute("msg", uDTO.getUser_name() + " 님 환영합니다.");
+            model.addAttribute("url", "/main.do");
+            session.setAttribute("userNo", uDTO.getUser_no());
+            session.setAttribute("userId", uDTO.getUser_id());
+            session.setAttribute("userName", uDTO.getUser_name());
+            session.setAttribute("userEmail", uDTO.getUser_email());
+            session.setAttribute("userPhone", uDTO.getUser_phone());
         }
+
+        return "/redirect";
     }
 
 }
