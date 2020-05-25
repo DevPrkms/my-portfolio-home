@@ -69,4 +69,10 @@ public class MainController {
         return "/redirect";
     }
 
+    @RequestMapping(value = "user/accountsearch")
+    public String accountsearch() {
+        log.info(this.getClass().getName() + " : accountsearch 호출");
+        return "/account/accountsearch";
+    }
+
 }

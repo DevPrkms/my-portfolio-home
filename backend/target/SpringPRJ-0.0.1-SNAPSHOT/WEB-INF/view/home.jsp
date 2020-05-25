@@ -57,17 +57,32 @@
     <p class="typing"></p>
 
     <!-- Modal login -->
+    <div id="btn-wrapper">
 
-    <button
-            id="jbtn"
-            class="btn btn-outline-light btn-round btn-lg"
-            type="button"
-            data-toggle="modal"
-            data-target="#loginModal"
-    >
-        Join
-    </button>
+        <button
+                id="jbtn"
+                class="btn btn-outline-light btn-round btn-lg"
+                type="button"
+                data-toggle="modal"
+                data-target="#loginModal"
+        >
+            로그인
+        </button>
+
+        <button
+                id="rbtn"
+                class="btn btn-outline-light btn-round btn-lg"
+                type="button"
+                data-toggle="modal"
+                data-target="#registerModal"
+        >
+            회원가입
+        </button>
+    </div>
 </div>
+
+<!-- 로그인 modal -->
+
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="LoginModalLabel" aria-hidden="true"
      data-backdrop="static">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -98,15 +113,17 @@
                     <div class="d-flex justify-content-center social-buttons">
                         </di>
                     </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <div class="signup-section">계정이 기억 안나시나요?  <a href="/user/accountsearch.do" class="text-info"> 계정찾기</a></div>
+                    </div>
                 </div>
             </div>
-            <div class="modal-footer d-flex justify-content-center">
-                <div class="signup-section">계정이 없으신가요? <a data-toggle="modal"
-                                                          data-target="#registerModal" class="text-info"> 회원가입</a></div>
-            </div>
+
         </div>
     </div>
 </div>
+
+<!-- 회원가입 modal -->
 
 <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="RegisterModalLabel"
      aria-hidden="true" data-backdrop="static">
@@ -119,7 +136,7 @@
             </div>
             <div class="modal-body">
                 <div class="form-title text-center">
-                    <h4 class="logintitle">로그인</h4>
+                    <h4 class="logintitle">회원가입</h4>
                 </div>
                 <div class="d-flex flex-column text-center">
                     <form id="registerform" action="/userReg.do">
@@ -139,10 +156,6 @@
                         </di>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer d-flex justify-content-center">
-                <div class="signup-section">계정이 이미 있으신가요? <a data-toggle="modal"
-                                                             data-target="#loginModal" class="text-info"> 로그인</a></div>
             </div>
         </div>
     </div>

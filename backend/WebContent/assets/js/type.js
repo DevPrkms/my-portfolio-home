@@ -18,7 +18,9 @@ function typejs() {
     } else {
       clearInterval(tyInt); //끝나면 반복종료]
       $("#jbtn").css("display", "flex");
+      $("#rbtn").css("display", "flex");
       $("#jbtn").show();
+      $("#rbtn").show();
     }
   }
 }

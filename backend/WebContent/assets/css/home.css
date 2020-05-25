@@ -64,7 +64,17 @@ p.typing-txt {
   }
 }
 
+#btn-wrapper{
+  display: flex;
+}
+
 #jbtn {
+  display: none;
+  margin: 0 auto;
+  margin-right: -50px;
+}
+
+#rbtn {
   display: none;
   margin: 0 auto;
 }
