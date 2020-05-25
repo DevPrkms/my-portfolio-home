@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import poly.dto.UserDTO;
 import poly.service.IHomeService;
@@ -44,7 +45,7 @@ public class MainController {
 
         String referer = CmmUtil.nvl((String)request.getHeader("REFERER"));
 
-        String userId = request.getParameter("userName");
+        String userId = request.getParameter("userId");
         String userPassword = request.getParameter("userPassword");
 
         UserDTO uDTO = new UserDTO();
@@ -73,6 +74,56 @@ public class MainController {
     public String accountsearch() {
         log.info(this.getClass().getName() + " : accountsearch 호출");
         return "/account/accountsearch";
+    }
+
+    @RequestMapping(value = "/idCheck", method = RequestMethod.POST)
+    @ResponseBody
+    public String idCheck(HttpServletRequest request) throws Exception {
+
+        log.info(this.getClass().getName() + " : idCheck 호출");
+        String userId = CmmUtil.nvl((String)request.getParameter("userId"));
+
+        log.info("userId : " + userId);
+        int count = homeService.idCheck(userId);
+
+        if (count == 0) {
+            return "0";
+        } else {
+            return "1";
+        }
+    }
+
+    @RequestMapping(value = "userReg")
+    public String userReg(HttpServletRequest request, Model model) throws Exception{
+
+        log.info(this.getClass().getName() + " : userReg 호출");
+
+        String userId = request.getParameter("userId2");
+        String userPassword = request.getParameter("userPassword2");
+        String userName = request.getParameter("userName");
+        String userEmail = request.getParameter("userEmail");
+        String userPhone = request.getParameter("userPhone");
+
+        UserDTO uDTO = new UserDTO();
+        uDTO.setUser_id(userId);
+        uDTO.setUser_password(userPassword);
+        uDTO.setUser_name(userName);
+        uDTO.setUser_email(userEmail);
+        uDTO.setUser_phone(userPhone);
+
+        int result = 0;
+
+        result = homeService.userReg(uDTO);
+
+        if(result == 1) {
+            model.addAttribute("msg", "회원가입이 완료되었습니다.");
+            model.addAttribute("url", "/home.do");
+        } else {
+            model.addAttribute("msg", "서버 오류입니다. 잠시후 다시 시도해 주세요.");
+            model.addAttribute("url", "/home.do");
+        }
+
+        return "/redirect";
     }
 
 }

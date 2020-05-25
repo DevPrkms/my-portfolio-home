@@ -22,4 +22,16 @@ public class HomeService implements IHomeService {
         log.info("uDTO : " + uDTO.getUser_id());
         return homeMapper.userLogin(uDTO);
     }
+
+    @Override
+    public int idCheck(String userId) throws Exception {
+        log.info(this.getClass().getName() + " : idCheck IService 호출");
+        return homeMapper.idCheck(userId);
+    }
+
+    @Override
+    public int userReg(UserDTO uDTO) throws Exception {
+        log.info(this.getClass().getName() + " : userReg IService 호출");
+        return homeMapper.userReg(uDTO);
+    }
 }

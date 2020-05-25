@@ -79,6 +79,14 @@ p.typing-txt {
   margin: 0 auto;
 }
 
+#loginbtn{
+  margin-bottom: 10px;
+}
+
+#registerbtn{
+  margin-bottom: 10px;
+}
+
 /* Modal Title */
 .container {
   padding: 2rem 0rem;

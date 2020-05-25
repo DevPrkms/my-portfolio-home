@@ -99,7 +99,7 @@
                 <div class="d-flex flex-column text-center">
                     <form id="loginform" action="/userLogin.do">
                         <div class="form-group">
-                            <input type="test" name="userName" class="form-control" id="userName"
+                            <input type="test" name="userId" class="form-control" id="userId"
                                    placeholder="계정을 입력해주세요.">
                             <span id="idm" class="vm"></span>
                         </div>
@@ -141,14 +141,34 @@
                 <div class="d-flex flex-column text-center">
                     <form id="registerform" action="/userReg.do">
                         <div class="form-group">
-                            <input type="test" name="userName" class="form-control" id="userName2"
+                            <input type="text" name="userId2" class="form-control" id="userId2"
                                    placeholder="계정을 입력해주세요.">
                             <span id="idm2" class="vm"></span>
                         </div>
                         <div class="form-group">
-                            <input type="password" name="userPassword" class="form-control" id="userPassword2"
+                            <input type="password" name="userPassword2" class="form-control" id="userPassword2"
                                    placeholder="비밀번호를 입력해주세요.">
                             <span id="pwm2" class="vm" style="display: none"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="userPasswordcheck" class="form-control" id="userPassword-c"
+                                   placeholder="비밀번호를 한번 더 입력해주세요.">
+                            <span id="pwm2-c" class="vm" style="display: none"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="userName" class="form-control" id="userName"
+                                   placeholder="이름을 입력해주세요.">
+                            <span id="nam" class="vm"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="userEmail" class="form-control" id="userEmail"
+                                   placeholder="이메일을 입력해주세요.">
+                            <span id="emm" class="vm"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="userPhone" class="form-control" id="userPhone"
+                                   placeholder="휴대폰 번호를 입력해주세요.">
+                            <span id="phm" class="vm"></span>
                         </div>
                         <button type="button" class="btn btn-info btn-block btn-round" id="registerbtn">회원가입</button>
                     </form>
