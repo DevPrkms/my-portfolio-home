@@ -9,4 +9,6 @@ public interface IHomeService {
     int idCheck(String userId) throws Exception;
 
     int userReg(UserDTO uDTO) throws Exception;
+
+    int emailvaild(String userId) throws Exception;
 }

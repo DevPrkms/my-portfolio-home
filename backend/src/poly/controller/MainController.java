@@ -44,7 +44,7 @@ public class MainController {
     public String userLogin(HttpServletRequest request, HttpSession session, Model model) throws Exception {
         log.info(this.getClass().getName() + " : userLogin 호출");
 
-        String referer = CmmUtil.nvl((String)request.getHeader("REFERER"));
+        String referer = CmmUtil.nvl((String) request.getHeader("REFERER"));
 
         String userId = request.getParameter("userId");
         String userPassword = request.getParameter("userPassword");
@@ -59,7 +59,7 @@ public class MainController {
             model.addAttribute("msg", "입력하신 정보가 서버에 없습니다.");
             model.addAttribute("url", referer);
         } else {
-            if(uDTO.getEmail_vaild().equals("N")){
+            if (uDTO.getEmail_vaild().equals("N")) {
                 model.addAttribute("msg", "이메일 인증이 완료되지 않았습니다.");
                 model.addAttribute("url", referer);
             } else {
@@ -87,7 +87,7 @@ public class MainController {
     public String idCheck(HttpServletRequest request) throws Exception {
 
         log.info(this.getClass().getName() + " : idCheck 호출");
-        String userId = CmmUtil.nvl((String)request.getParameter("userId"));
+        String userId = CmmUtil.nvl((String) request.getParameter("userId"));
 
         log.info("userId : " + userId);
         int count = homeService.idCheck(userId);
@@ -100,7 +100,7 @@ public class MainController {
     }
 
     @RequestMapping(value = "userReg", method = RequestMethod.POST)
-    public String userReg(HttpServletRequest request, Model model) throws Exception{
+    public String userReg(HttpServletRequest request, Model model) throws Exception {
 
         log.info(this.getClass().getName() + " : userReg 호출");
 
@@ -121,9 +121,9 @@ public class MainController {
 
         result = homeService.userReg(uDTO);
 
-        if(result == 1) {
-            model.addAttribute("msg", "입력하신 이메일로 인증코드가 전송되었습니다.");
-            model.addAttribute("url", "/home.do");
+        if (result == 1) {
+            model.addAttribute("msg","이메일 인증까지 완료되어야 회원가입이 완료됩니다.");
+            model.addAttribute("url", "/mail/sendMail.do?userEmail=" + userEmail + "&userId=" + userId);
         } else {
             model.addAttribute("msg", "서버 오류입니다. 잠시후 다시 시도해 주세요.");
             model.addAttribute("url", "/home.do");
@@ -132,11 +132,29 @@ public class MainController {
         return "/redirect";
     }
 
-    @RequestMapping(value="emailvaild")
-    public String emailvaild(HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "emailvaild", method = RequestMethod.GET)
+    public String emailvaild(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
         log.info(this.getClass().getName() + " : emailvaild 호출");
+        String userId = CmmUtil.nvl((String) request.getParameter("userId"));
 
-        return "/home";
+        int count = homeService.idCheck(userId);
+
+        if (count == 0) {
+            model.addAttribute("msg", "잘못된 접근입니다.");
+            model.addAttribute("url", "/home.do");
+        } else {
+            int res = homeService.emailvaild(userId);
+            if (res > 0) {
+                model.addAttribute("msg", "이메일 인증이 완료되었습니다.");
+                model.addAttribute("url", "/home.do");
+            } else {
+                model.addAttribute("msg", "서버 오류입니다. 잠시후 다시 시도해 주세요.");
+                model.addAttribute("url", "/home.do");
+            }
+        }
+
+
+        return "/redirect";
     }
 
 }

@@ -52,4 +52,11 @@
 		)
 	</insert>
 
+	<update id="emailvaild" parameterType="String">
+		UPDATE USER_INFO
+		SET EMAIL_VAILD = 'Y'
+		WHERE
+			USER_ID = #{userId}
+	</update>
+
 </mapper>

@@ -10,4 +10,6 @@ public interface IHomeMapper {
     int idCheck(String userId) throws Exception;
 
     int userReg(UserDTO uDTO) throws Exception;
+
+    int emailvaild(String userId) throws Exception;
 }

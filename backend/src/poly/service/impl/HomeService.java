@@ -34,4 +34,9 @@ public class HomeService implements IHomeService {
         log.info(this.getClass().getName() + " : userReg IService 호출");
         return homeMapper.userReg(uDTO);
     }
+
+    @Override
+    public int emailvaild(String userId) throws Exception {
+        return homeMapper.emailvaild(userId);
+    }
 }
