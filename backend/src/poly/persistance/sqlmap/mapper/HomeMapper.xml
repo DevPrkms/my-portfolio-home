@@ -8,7 +8,8 @@
 			USER_PASSWORD AS user_password,
 			USER_NAME AS user_name,
 			USER_EMAIL AS user_email,
-			USER_PHONE AS user_phone
+			USER_PHONE AS user_phone,
+			EMAIL_VAILD AS email_vaild
 		FROM
 			USER_INFO
 		WHERE

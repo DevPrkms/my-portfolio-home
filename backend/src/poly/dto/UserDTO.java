@@ -11,6 +11,7 @@ public class UserDTO {
     private String reg_no;
     private String chg_dt;
     private String chg_no;
+    private String email_vaild;
 
     public String getUser_no() {
         return user_no;
@@ -90,5 +91,13 @@ public class UserDTO {
 
     public void setChg_no(String chg_no) {
         this.chg_no = chg_no;
+    }
+
+    public String getEmail_vaild() {
+        return email_vaild;
+    }
+
+    public void setEmail_vaild(String email_vaild) {
+        this.email_vaild = email_vaild;
     }
 }

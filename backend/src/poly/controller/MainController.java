@@ -14,6 +14,7 @@ import poly.util.CmmUtil;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -39,7 +40,7 @@ public class MainController {
         return "/main";
     }
 
-    @RequestMapping(value = "userLogin")
+    @RequestMapping(value = "userLogin", method = RequestMethod.POST)
     public String userLogin(HttpServletRequest request, HttpSession session, Model model) throws Exception {
         log.info(this.getClass().getName() + " : userLogin 호출");
 
@@ -58,13 +59,18 @@ public class MainController {
             model.addAttribute("msg", "입력하신 정보가 서버에 없습니다.");
             model.addAttribute("url", referer);
         } else {
-            model.addAttribute("msg", uDTO.getUser_name() + " 님 환영합니다.");
-            model.addAttribute("url", "/main.do");
-            session.setAttribute("userNo", uDTO.getUser_no());
-            session.setAttribute("userId", uDTO.getUser_id());
-            session.setAttribute("userName", uDTO.getUser_name());
-            session.setAttribute("userEmail", uDTO.getUser_email());
-            session.setAttribute("userPhone", uDTO.getUser_phone());
+            if(uDTO.getEmail_vaild().equals("N")){
+                model.addAttribute("msg", "이메일 인증이 완료되지 않았습니다.");
+                model.addAttribute("url", referer);
+            } else {
+                model.addAttribute("msg", uDTO.getUser_name() + " 님 환영합니다.");
+                model.addAttribute("url", "/main.do");
+                session.setAttribute("userNo", uDTO.getUser_no());
+                session.setAttribute("userId", uDTO.getUser_id());
+                session.setAttribute("userName", uDTO.getUser_name());
+                session.setAttribute("userEmail", uDTO.getUser_email());
+                session.setAttribute("userPhone", uDTO.getUser_phone());
+            }
         }
 
         return "/redirect";
@@ -93,7 +99,7 @@ public class MainController {
         }
     }
 
-    @RequestMapping(value = "userReg")
+    @RequestMapping(value = "userReg", method = RequestMethod.POST)
     public String userReg(HttpServletRequest request, Model model) throws Exception{
 
         log.info(this.getClass().getName() + " : userReg 호출");
@@ -116,7 +122,7 @@ public class MainController {
         result = homeService.userReg(uDTO);
 
         if(result == 1) {
-            model.addAttribute("msg", "회원가입이 완료되었습니다.");
+            model.addAttribute("msg", "입력하신 이메일로 인증코드가 전송되었습니다.");
             model.addAttribute("url", "/home.do");
         } else {
             model.addAttribute("msg", "서버 오류입니다. 잠시후 다시 시도해 주세요.");
@@ -124,6 +130,13 @@ public class MainController {
         }
 
         return "/redirect";
+    }
+
+    @RequestMapping(value="emailvaild")
+    public String emailvaild(HttpServletRequest request, HttpServletResponse response) {
+        log.info(this.getClass().getName() + " : emailvaild 호출");
+
+        return "/home";
     }
 
 }

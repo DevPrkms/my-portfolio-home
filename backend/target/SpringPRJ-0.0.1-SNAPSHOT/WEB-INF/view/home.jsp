@@ -97,7 +97,7 @@
                     <h4 class="logintitle">로그인</h4>
                 </div>
                 <div class="d-flex flex-column text-center">
-                    <form id="loginform" action="/userLogin.do">
+                    <form id="loginform" action="/userLogin.do" method="post">
                         <div class="form-group">
                             <input type="test" name="userId" class="form-control" id="userId"
                                    placeholder="계정을 입력해주세요.">
@@ -139,7 +139,7 @@
                     <h4 class="logintitle">회원가입</h4>
                 </div>
                 <div class="d-flex flex-column text-center">
-                    <form id="registerform" action="/userReg.do">
+                    <form id="registerform" action="/userReg.do" method="post">
                         <div class="form-group">
                             <input type="text" name="userId2" class="form-control" id="userId2"
                                    placeholder="계정을 입력해주세요.">
