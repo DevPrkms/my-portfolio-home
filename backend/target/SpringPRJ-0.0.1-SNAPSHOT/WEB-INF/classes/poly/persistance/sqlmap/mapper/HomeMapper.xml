@@ -59,4 +59,11 @@
 			USER_ID = #{userId}
 	</update>
 
+	<select id="emCheck" parameterType="String" resultType="Integer">
+		SELECT COUNT(*)
+		FROM USER_INFO
+		WHERE
+			USER_EMAIL = #{userEmail}
+	</select>
+
 </mapper>

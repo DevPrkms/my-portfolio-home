@@ -39,4 +39,10 @@ public class HomeService implements IHomeService {
     public int emailvaild(String userId) throws Exception {
         return homeMapper.emailvaild(userId);
     }
+
+    @Override
+    public int emCheck(String userEmail) throws Exception {
+        log.info(this.getClass().getName() + " : emCheck IService 호출");
+        return homeMapper.emCheck(userEmail);
+    }
 }

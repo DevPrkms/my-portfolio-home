@@ -19,9 +19,9 @@ public class MailService implements IMailService {
 
     private Logger log = Logger.getLogger(this.getClass());
 
-    final String host = "smtp.gamil.com";
-    final String user = "devprkms";
-    final String password = "7451882s";
+    final String host = "smtp.office365.com";
+    final String user = "1920110012@student.kopo.ac.kr";
+    final String password = "407412ad!@";
 
     @Override
     public int sendEmail(MailDTO pDTO) {
@@ -37,7 +37,7 @@ public class MailService implements IMailService {
 
         Properties props = new Properties();
         props.put("mail.smtp.starttls.enable", "true");     // gmail은 무조건 true 고정
-        props.put("mail.smtp.host", "smtp.gmail.com");      // smtp 서버 주소
+        props.put("mail.smtp.host", "smtp.office365.com");      // smtp 서버 주소
         props.put("mail.smtp.auth","true");                 // gmail은 무조건 true 고정
         props.put("mail.smtp.port", "587");                 // gmail 포트
 

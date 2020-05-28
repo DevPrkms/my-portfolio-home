@@ -38,13 +38,6 @@
 
     <!-- page CSS -->
     <link rel="stylesheet" href="/assets/css/home.css?v=1.3"/>
-    <script>
-        $(document).ready(function () {
-            console.log("function 로드");
-            $("#idm").hide();
-            $("#pwm").hide();
-        })
-    </script>
 
     <script>
         var sessionuserName = '<%=userNm%>';
@@ -99,7 +92,7 @@
                 <div class="d-flex flex-column text-center">
                     <form id="loginform" action="/userLogin.do" method="post">
                         <div class="form-group">
-                            <input type="test" name="userId" class="form-control" id="userId"
+                            <input type="text" name="userId" class="form-control" id="userId"
                                    placeholder="계정을 입력해주세요.">
                             <span id="idm" class="vm"></span>
                         </div>
@@ -112,9 +105,6 @@
                     </form>
                     <div class="d-flex justify-content-center social-buttons">
                         </di>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-center">
-                        <div class="signup-section">계정이 기억 안나시나요?  <a href="/user/accountsearch.do" class="text-info"> 계정찾기</a></div>
                     </div>
                 </div>
             </div>

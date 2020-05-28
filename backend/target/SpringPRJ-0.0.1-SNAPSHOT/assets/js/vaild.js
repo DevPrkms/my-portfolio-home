@@ -145,11 +145,34 @@ $("#userEmail").keyup(function () {
         $("#emm").html("이메일 형식에 맞게 입력해주세요.");
         eridx = 0;
     } else {
-        $("#userEmail").css("background-color", "#E1F5A9");
         $("#emm").hide();
-        eridx = 1;
+        $("#userEmail").css("background-color", "#FFFFFF");
     }
 });
+
+$("#userEmail").focusout(function(){
+    var userEmail = $("#userEmail").val();
+    $.ajax({
+        async: true,
+        type: 'POST',
+        data: {'userEmail': userEmail},
+        url: "/emCheck.do",
+        success: function (data) {
+            if (data > 0) {
+                $("#emm").show();
+                $("#emm").html("이미 사용중인 이메일입니다.");
+            } else {
+                $("#userEmail").css("background-color", "#E1F5A9");
+                $("#emm").hide();
+                eridx = 1;
+            }
+        }
+        ,
+        error: function (error) {
+            alert("error : " + error);
+        }
+    });
+})
 
 $("#userPhone").keyup(function(){
    var userPhone = $("#userPhone").val();

@@ -76,12 +76,6 @@ public class MainController {
         return "/redirect";
     }
 
-    @RequestMapping(value = "user/accountsearch")
-    public String accountsearch() {
-        log.info(this.getClass().getName() + " : accountsearch 호출");
-        return "/account/accountsearch";
-    }
-
     @RequestMapping(value = "/idCheck", method = RequestMethod.POST)
     @ResponseBody
     public String idCheck(HttpServletRequest request) throws Exception {
@@ -91,6 +85,24 @@ public class MainController {
 
         log.info("userId : " + userId);
         int count = homeService.idCheck(userId);
+
+        if (count == 0) {
+            return "0";
+        } else {
+            return "1";
+        }
+    }
+
+    @RequestMapping(value = "/emCheck", method = RequestMethod.POST)
+    @ResponseBody
+    public String emCheck(HttpServletRequest request) throws Exception {
+
+        log.info(this.getClass().getName() + " : emCheck 호출");
+        String userEmail = CmmUtil.nvl((String) request.getParameter("userEmail"));
+
+        log.info("userEmail : " + userEmail);
+        int count = homeService.emCheck(userEmail);
+        log.info("count : " + count);
 
         if (count == 0) {
             return "0";
@@ -122,7 +134,7 @@ public class MainController {
         result = homeService.userReg(uDTO);
 
         if (result == 1) {
-            model.addAttribute("msg","이메일 인증까지 완료되어야 회원가입이 완료됩니다.");
+            model.addAttribute("msg", "이메일 인증까지 완료되어야 회원가입이 완료됩니다.");
             model.addAttribute("url", "/mail/sendMail.do?userEmail=" + userEmail + "&userId=" + userId);
         } else {
             model.addAttribute("msg", "서버 오류입니다. 잠시후 다시 시도해 주세요.");

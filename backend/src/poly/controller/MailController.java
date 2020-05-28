@@ -22,7 +22,6 @@ public class MailController {
     private IMailService mailService;
 
     @RequestMapping(value = "mail/sendMail", method = RequestMethod.GET)
-    @ResponseBody
     public String sendMail(HttpServletResponse response, HttpServletRequest request, Model model) throws Exception {
         log.info(this.getClass().getName() + " : sendMail 호출");
 
