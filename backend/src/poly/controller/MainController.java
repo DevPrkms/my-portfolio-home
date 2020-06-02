@@ -37,7 +37,7 @@ public class MainController {
     @RequestMapping(value = "main")
     public String main() {
         log.info(this.getClass().getName() + " : main 호출");
-        return "/main";
+        return "main/main";
     }
 
     @RequestMapping(value = "userLogin", method = RequestMethod.POST)
@@ -64,7 +64,7 @@ public class MainController {
                 model.addAttribute("url", referer);
             } else {
                 model.addAttribute("msg", uDTO.getUser_name() + " 님 환영합니다.");
-                model.addAttribute("url", "/main.do");
+                model.addAttribute("url", "/main/main.do");
                 session.setAttribute("userNo", uDTO.getUser_no());
                 session.setAttribute("userId", uDTO.getUser_id());
                 session.setAttribute("userName", uDTO.getUser_name());
