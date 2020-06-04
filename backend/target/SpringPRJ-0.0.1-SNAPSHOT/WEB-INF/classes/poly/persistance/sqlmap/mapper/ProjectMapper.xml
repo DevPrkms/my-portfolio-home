@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="poly.persistance.mapper.IProjectMapper">
+
+    <insert id="insertProjectInfo" parameterType="ProjectDTO">
+        INSERT
+        INTO PROJECT_INFO (PROJECT_NAME,
+                           PROJECT_DAY,
+                           PROJECT_CONTENTS,
+                           REG_DT,
+                           REG_ID,
+                           CHG_ID)
+        VALUES (#{project_name},
+                #{project_day},
+                #{project_contents},
+                SYSDATE(),
+                #{reg_id},
+                #{reg_id})
+    </insert>
+
+    <select id="selectProjectInfo" parameterType="String" resultType="Integer">
+        SELECT PROJECT_SEQ
+        FROM PROJECT_INFO
+        WHERE PROJECT_NAME = #{pname}
+    </select>
+
+    <insert id="insertFileInfo" parameterType="FileDTO">
+        INSERT
+        INTO FILE_INFO(PROJECT_SEQ,
+                       ORIGINAL_FILE_NAME,
+                       STORED_FILE_NAME,
+                       FILE_SIZE,
+                       REG_DT,
+                       REG_ID,
+                       CHG_ID)
+        VALUES (#{project_seq},
+                #{original_file_name},
+                #{stored_file_name},
+                #{file_size},
+                SYSDATE(),
+                #{reg_id},
+                #{reg_id})
+    </insert>
+
+    <select id="pnameCheck" parameterType="String" resultType="Integer">
+        SELECT COUNT(*)
+        FROM PROJECT_INFO
+        WHERE PROJECT_NAME = #{pname}
+    </select>
+</mapper>

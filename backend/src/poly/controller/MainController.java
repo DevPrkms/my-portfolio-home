@@ -37,7 +37,29 @@ public class MainController {
     @RequestMapping(value = "main")
     public String main() {
         log.info(this.getClass().getName() + " : main 호출");
-        return "main/main";
+        return "/mainpage/main";
+    }
+
+    @RequestMapping(value = "padd")
+    public String padd() {
+        log.info(this.getClass().getName() + " : padd 호출");
+        return "/mainpage/padd";
+    }
+
+    @RequestMapping(value = "plist")
+    public String plist() {
+        log.info(this.getClass().getName() + " : plist 호출");
+        return "/mainpage/plist";
+    }
+
+    @RequestMapping(value = "logout")
+    public String logout(Model model, HttpSession session) {
+        log.info(this.getClass().getName() + " : logout 호출");
+        model.addAttribute("url", "/home.do");
+        model.addAttribute("msg", "로그아웃 되었습니다.");
+        session.invalidate();
+
+        return "/redirect";
     }
 
     @RequestMapping(value = "userLogin", method = RequestMethod.POST)
@@ -64,7 +86,7 @@ public class MainController {
                 model.addAttribute("url", referer);
             } else {
                 model.addAttribute("msg", uDTO.getUser_name() + " 님 환영합니다.");
-                model.addAttribute("url", "/main/main.do");
+                model.addAttribute("url", "/main.do");
                 session.setAttribute("userNo", uDTO.getUser_no());
                 session.setAttribute("userId", uDTO.getUser_id());
                 session.setAttribute("userName", uDTO.getUser_name());

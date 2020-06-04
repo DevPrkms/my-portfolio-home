@@ -6,5 +6,7 @@
         <!-- 사용할 DTO 등록  -->
         <typeAlias type="poly.dto.UserDTO" alias="UserDTO"/>
         <typeAlias type="poly.dto.MailDTO" alias="MailDTO"/>
+        <typeAlias type="poly.dto.ProjectDTO" alias="ProjectDTO"/>
+        <typeAlias type="poly.dto.FileDTO" alias="FileDTO"/>
     </typeAliases>
 </configuration>

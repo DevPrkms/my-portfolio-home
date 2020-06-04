@@ -8,9 +8,9 @@ public class UserDTO {
     private String user_email;
     private String user_phone;
     private String reg_dt;
-    private String reg_no;
+    private String reg_id;
     private String chg_dt;
-    private String chg_no;
+    private String chg_id;
     private String email_vaild;
 
     public String getUser_no() {
@@ -69,12 +69,20 @@ public class UserDTO {
         this.reg_dt = reg_dt;
     }
 
-    public String getReg_no() {
-        return reg_no;
+    public String getReg_id() {
+        return reg_id;
     }
 
-    public void setReg_no(String reg_no) {
-        this.reg_no = reg_no;
+    public void setReg_id(String reg_id) {
+        this.reg_id = reg_id;
+    }
+
+    public String getChg_id() {
+        return chg_id;
+    }
+
+    public void setChg_id(String chg_id) {
+        this.chg_id = chg_id;
     }
 
     public String getChg_dt() {
@@ -85,13 +93,6 @@ public class UserDTO {
         this.chg_dt = chg_dt;
     }
 
-    public String getChg_no() {
-        return chg_no;
-    }
-
-    public void setChg_no(String chg_no) {
-        this.chg_no = chg_no;
-    }
 
     public String getEmail_vaild() {
         return email_vaild;

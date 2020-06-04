@@ -36,8 +36,8 @@
 			USER_EMAIL,
 			USER_PHONE,
 			REG_DT,
-			REG_NO,
-			CHG_NO
+			REG_ID,
+			CHG_ID
 		)
 		VALUES
 		(
