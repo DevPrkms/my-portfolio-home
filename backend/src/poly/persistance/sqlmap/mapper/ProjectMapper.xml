@@ -47,4 +47,18 @@
         FROM PROJECT_INFO
         WHERE PROJECT_NAME = #{pname}
     </select>
+
+    <select id="getProjectInfo" parameterType="ProjectDTO" resultType="ProjectDTO">
+        SELECT
+            PROJECT_SEQ,
+            PROJECT_NAME,
+            PROJECT_DAY,
+            PROJECT_CONTENTS,
+            REG_ID,
+            CHG_DT
+        FROM
+            PROJECT_INFO
+        WHERE
+            REG_ID = #{reg_id}
+    </select>
 </mapper>

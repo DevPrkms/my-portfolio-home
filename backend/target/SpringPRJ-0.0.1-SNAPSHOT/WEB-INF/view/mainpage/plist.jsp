@@ -6,8 +6,15 @@
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- jQuery load -->
+    <script
+            src="https://code.jquery.com/jquery-3.5.0.js"
+            integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc="
+            crossorigin="anonymous"
+    ></script>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui"
@@ -20,9 +27,9 @@
             name="keywords"
             content="admin template, robust admin template, dashboard template, flat admin template, responsive admin template, web app"
     />
-    <meta name="author" content="PIXINVENT" />
+    <meta name="author" content="PIXINVENT"/>
     <title>My Portfolio</title>
-    <link rel="stylesheet" href="/assets/main-assets/assets/css/font.css" />
+    <link rel="stylesheet" href="/assets/main-assets/assets/css/font.css"/>
     <link
             rel="apple-touch-icon"
             sizes="60x60"
@@ -48,9 +55,9 @@
             type="image/x-icon"
             href="/assets/main-assets/app-assets/images/ico/favicon.ico"
     />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-touch-fullscreen" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-touch-fullscreen" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
     <!-- BEGIN VENDOR CSS-->
     <link
             rel="stylesheet"
@@ -80,8 +87,8 @@
             type="text/css"
             href="/assets/main-assets/app-assets/css/bootstrap-extended.css"
     />
-    <link rel="stylesheet" type="text/css" href="/assets/main-assets/app-assets/css/app.css" />
-    <link rel="stylesheet" type="text/css" href="/assets/main-assets/app-assets/css/colors.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/main-assets/app-assets/css/app.css"/>
+    <link rel="stylesheet" type="text/css" href="/assets/main-assets/app-assets/css/colors.css"/>
     <!-- END ROBUST CSS-->
     <!-- BEGIN Page Level CSS-->
     <link
@@ -101,8 +108,26 @@
     />
     <!-- END Page Level CSS-->
     <!-- BEGIN Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="/assets/main-assets/assets/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/main-assets/assets/css/style.css"/>
     <!-- END Custom CSS-->
+
+    <script>
+        $(window).on("load", function () {
+            $.ajax({
+                url: "/Project/getProjectInfo.do",
+                type: "post",
+                dataType: "JSON",
+
+                success: function (json) {
+                    console.log(json.length());
+                }
+                ,
+                error: function (error) {
+                    alert("error : " + error);
+                }
+            })
+        })
+    </script>
 </head>
 <body
         data-open="click"
@@ -160,7 +185,7 @@
                         ><span class="avatar avatar-online"
                         ><img
                                 src="/assets/main-assets/app-assets/images/portrait/small/avatar-s-1.png"
-                                alt="avatar" /><i></i></span
+                                alt="avatar"/><i></i></span
                         ><span class="user-name"><%=userNm%></span></a
                         >
                         <div class="dropdown-menu dropdown-menu-right">
@@ -201,12 +226,12 @@
             <li class="nav-item">
                 <a href="/main.do"
                 ><i class="icon-paper"></i
-            ><span
-                    data-i18n="nav.form_layouts.form_layout_basic"
-                    class="menu-title"
-            >대시보드</span
-            ></a
-                    >
+                ><span
+                        data-i18n="nav.form_layouts.form_layout_basic"
+                        class="menu-title"
+                >대시보드</span
+                ></a
+                >
             </li>
             <li class="nav-item has-sub open">
                 <a href="#"
@@ -287,9 +312,11 @@
         <div class="content-body">
             <div class="row match-height">
                 <div class="col-xl-4 col-md-6 col-sm-12">
-                    <div class="card" style="height: 438px;">
+                    <div class="card" style="height: auto;">
                         <div class="card-body">
-                            <img class="card-img-top img-fluid" src="/assets/main-assets/app-assets/images/doc-images/robust-build-process.png" alt="Card image cap">
+                            <img class="card-img-top img-fluid"
+                                 src="/assets/main-assets/app-assets/images/doc-images/robust-build-process.png"
+                                 alt="Card image cap">
                             <div class="card-block">
                                 <h4 class="card-title">TEST TITLE</h4>
                                 <p class="card-text">test text</p>

@@ -17,7 +17,10 @@ import poly.util.DateUtil;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class ProjectController {
@@ -111,5 +114,30 @@ public class ProjectController {
         } else {
             return "1";
         }
+    }
+
+    @RequestMapping(value = "Project/getProjectInfo")
+    @ResponseBody
+    public List<ProjectDTO> getProjectInfo(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception {
+
+        log.info(this.getClass().getName() + " : getProjectInfo 호출");
+
+        List<ProjectDTO> rList = null;
+
+        String userid = CmmUtil.nvl((String)session.getAttribute("username"));
+
+        ProjectDTO pDTO = new ProjectDTO();
+
+        pDTO.setReg_id(userid);
+
+        rList = projectService.getProjectInfo(pDTO);
+
+        if(rList == null) {
+            rList = new ArrayList<ProjectDTO>();
+        }
+
+        log.info(this.getClass().getName() + " : getProjectInfo 종료");
+
+        return rList;
     }
 }
