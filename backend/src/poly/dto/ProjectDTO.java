@@ -9,6 +9,24 @@ public class ProjectDTO {
     private String reg_id;
     private String chg_dt;
     private String chg_id;
+    private String img_save_path;
+    private String file_save_path;
+
+    public String getImg_save_path() {
+        return img_save_path;
+    }
+
+    public void setImg_save_path(String img_save_path) {
+        this.img_save_path = img_save_path;
+    }
+
+    public String getFile_save_path() {
+        return file_save_path;
+    }
+
+    public void setFile_save_path(String file_save_path) {
+        this.file_save_path = file_save_path;
+    }
 
     public String getProject_seq() {
         return project_seq;

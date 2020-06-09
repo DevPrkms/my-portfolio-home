@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String userNm = CmmUtil.nvl((String) session.getAttribute("userName"));
+    String userId = CmmUtil.nvl((String) session.getAttribute("userId"));
 %>
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
@@ -316,7 +317,7 @@
                                     <div class="card-block">
                                         <form id="prjform" action="/project/add.do" enctype="multipart/form-data"
                                               method="post">
-                                            <input type="hidden" name="regid" value="<%=userNm%>"/>
+                                            <input type="hidden" name="regid" value="<%=userId%>"/>
                                             <div class="form-body">
                                                 <div class="col-xl-6">
 

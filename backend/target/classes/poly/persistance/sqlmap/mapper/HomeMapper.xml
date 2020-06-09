@@ -3,7 +3,6 @@
 <mapper namespace="poly.persistance.mapper.IHomeMapper">
     <select id="userLogin" parameterType="UserDTO" resultType="UserDTO">
 		SELECT
-			USER_NO AS user_no,
 			USER_ID AS user_id,
 			USER_PASSWORD AS user_password,
 			USER_NAME AS user_name,

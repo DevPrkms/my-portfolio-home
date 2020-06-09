@@ -81,8 +81,8 @@ public class RedisMapper implements IRedisMapper {
     }
 
     @Override
-    public boolean setTimeOutHour(String roomKey, int hours) throws Exception {
+    public boolean setTimeOutMinute(String roomKey, int minutes) throws Exception {
         log.info(this.getClass().getName() + " : setTimeOutHour 호출");
-        return redisDB.expire(roomKey, hours, TimeUnit.HOURS);
+        return redisDB.expire(roomKey, minutes, TimeUnit.MINUTES);
     }
 }

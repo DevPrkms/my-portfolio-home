@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import poly.dto.FileDTO;
 import poly.dto.ProjectDTO;
+import poly.persistance.redis.IRedisMapper;
 import poly.service.IProjectService;
 import poly.util.CmmUtil;
 import poly.util.DateUtil;
@@ -36,12 +37,15 @@ public class ProjectController {
         log.info(this.getClass().getName() + " : project add 호출");
 
         String referer = CmmUtil.nvl((String) request.getHeader("REFERER"));
+        String match = "[^\uAC00-\uD7A3xfe0-9a-zA-Z\\s\\_]";
 
         // 게시글 저장 변수 선언 부분
         String pname = request.getParameter("prjname");
         String ptime = request.getParameter("prjtime");
         String pcontents = request.getParameter("prjcontents");
         String regid = request.getParameter("regid");
+
+        String i_name = pname.replaceAll(match, "");
 
         // 파일 저장 변수 선언 부분
         String originalFileName = mf.getOriginalFilename();
@@ -51,12 +55,15 @@ public class ProjectController {
 
         String ext = originalFileName.substring(originalFileName.lastIndexOf(".") + 1, originalFileName.length()).toLowerCase();
 
+        String saveFileName = i_name + "_" + DateUtil.getDateTime("HHmmss") + "." + ext;
+
         //게시글 저장 프로세스
         ProjectDTO pDTO = new ProjectDTO();
         pDTO.setProject_name(pname);
         pDTO.setProject_day(ptime);
         pDTO.setProject_contents(pcontents);
         pDTO.setReg_id(regid);
+        pDTO.setImg_save_path(saveFileName);
 
         int prjresult = projectService.insertProjectInfo(pDTO);
 
@@ -65,7 +72,8 @@ public class ProjectController {
             log.info(cnt);
 
             if (ext.equals("jpeg") || ext.equals("jpg") || ext.equals("gif") || ext.equals("png")) {
-                String saveFileName = pname + "_" + DateUtil.getDateTime("HHmmss") + "." + ext;
+
+                log.info("saveFileName : " + saveFileName);
 
                 String saveFilePath = FILE_UPLOAD_SAVE_PATH;
 
@@ -125,7 +133,7 @@ public class ProjectController {
 
         List<ProjectDTO> rList = null;
 
-        String userid = CmmUtil.nvl((String) session.getAttribute("username"));
+        String userid = CmmUtil.nvl((String) session.getAttribute("userId"));
 
         ProjectDTO pDTO = new ProjectDTO();
 
@@ -133,9 +141,13 @@ public class ProjectController {
 
         rList = projectService.getProjectInfo(pDTO);
 
+        log.info("rList : " + rList.size());
+
         if (rList == null) {
             rList = new ArrayList<ProjectDTO>();
         }
+
+        log.info("rList : " + rList.size());
 
         log.info(this.getClass().getName() + " : getProjectInfo 종료");
 

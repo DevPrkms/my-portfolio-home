@@ -53,6 +53,8 @@ public class ProjectService implements IProjectService {
 
         List<ProjectDTO> rList = null;
 
+        System.out.println("pDTO : " + pDTO.getReg_id());
+
         String key = "PROJECT_INFO_" + DateUtil.getDateTime("yyyyMMdd");
 
         if (redisMapper.getExists(key)) {
@@ -62,7 +64,7 @@ public class ProjectService implements IProjectService {
                 rList = new ArrayList<ProjectDTO>();
             }
 
-            redisMapper.setTimeOutHour(key, 1);
+            redisMapper.setTimeOutMinute(key, 1);
         } else {
 
             rList = projectMapper.getProjectInfo(pDTO);
@@ -74,7 +76,7 @@ public class ProjectService implements IProjectService {
             if (rList.size() > 0) {
                 redisMapper.setProjectInfo(key, rList);
 
-                redisMapper.setTimeOutHour(key, 1);
+                redisMapper.setTimeOutMinute(key, 1);
             }
         }
 

@@ -117,17 +117,74 @@
                 url: "/Project/getProjectInfo.do",
                 type: "post",
                 dataType: "JSON",
-
                 success: function (json) {
-                    console.log(json.length());
-                }
-                ,
+
+                    if (json.length > 0) {
+
+                        var prjResult = "";
+
+                        for (var i = 0; i < json.length; i++) {
+                            json[i].project_name = json[i].project_name.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                            console.log(json[i].project_name);
+                            json[i].project_contents = json[i].project_contents.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                            console.log(json[i].project_contents);
+
+                            prjResult += ("<div class='col-xl-4 col-md-6 col-sm-12'>")
+                            prjResult += ("<a class='card-hyper' href='#'>");
+                            prjResult += ("<div class='card' style='height: auto;'>");
+                            prjResult += ("<div class='card-body'>");
+                            if (json[i].)
+                            prjResult += ("<img class='card-img-top img-fluid' src='/prjimg/" + json[i].img_save_path + "' alt='Card image cap'");
+                            prjResult += ("<div class='card-block'>");
+                            prjResult += ("<h4 class='card-title'  escapeXml='false'>" + json[i].project_name + "</h4>");
+                            prjResult += ("<p class='card-text' style='height: 100px; overflow: hidden;'>" + json[i].project_contents + "</p>");
+                            prjResult += ("</div>");
+                            prjResult += ("</div>");
+                            prjResult += ("</div>");
+                            prjResult += ("</a>");
+                            prjResult += ("</div>");
+                        }
+
+                        $("#prjResult").html(prjResult);
+                    } else {
+                        var prjResult = "";
+                        prjResult += ("<h1 style='color: gray; text-align: center'> 등록된 프로젝트가 없습니다. </h1>");
+
+                        $("#prjResult").html(prjResult);
+                    }
+                },
                 error: function (error) {
                     alert("error : " + error);
                 }
             })
         })
     </script>
+
+    <style>
+        .card-hyper:active {
+            color: black;
+        }
+
+        .card-hyper:hover {
+            color: black;
+        }
+
+        .card-hyper:link {
+            color: black;
+        }
+
+        .card-hyper:visited {
+            color: black;
+        }
+
+        .card-title {
+            margin: 10px;
+        }
+
+        .card-text {
+            margin: 10px;
+        }
+    </style>
 </head>
 <body
         data-open="click"
@@ -310,21 +367,8 @@
         </div>
 
         <div class="content-body">
-            <div class="row match-height">
-                <div class="col-xl-4 col-md-6 col-sm-12">
-                    <div class="card" style="height: auto;">
-                        <div class="card-body">
-                            <img class="card-img-top img-fluid"
-                                 src="/assets/main-assets/app-assets/images/doc-images/robust-build-process.png"
-                                 alt="Card image cap">
-                            <div class="card-block">
-                                <h4 class="card-title">TEST TITLE</h4>
-                                <p class="card-text">test text</p>
-                                <a href="#" class="btn btn-outline-light-blue">프로젝트 보기</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div id="prjResult" class="row match-height">
+
             </div>
         </div>
     </div>

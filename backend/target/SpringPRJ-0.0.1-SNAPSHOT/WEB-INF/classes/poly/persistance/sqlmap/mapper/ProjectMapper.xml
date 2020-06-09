@@ -9,13 +9,15 @@
                            PROJECT_CONTENTS,
                            REG_DT,
                            REG_ID,
-                           CHG_ID)
+                           CHG_ID,
+                           IMG_SAVE_PATH)
         VALUES (#{project_name},
                 #{project_day},
                 #{project_contents},
                 SYSDATE(),
                 #{reg_id},
-                #{reg_id})
+                #{reg_id},
+                #{img_save_path})
     </insert>
 
     <select id="selectProjectInfo" parameterType="String" resultType="Integer">
@@ -55,7 +57,8 @@
             PROJECT_DAY,
             PROJECT_CONTENTS,
             REG_ID,
-            CHG_DT
+            CHG_DT,
+            IMG_SAVE_PATH
         FROM
             PROJECT_INFO
         WHERE
