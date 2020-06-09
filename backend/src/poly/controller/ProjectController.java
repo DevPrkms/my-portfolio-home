@@ -60,7 +60,7 @@ public class ProjectController {
 
         int prjresult = projectService.insertProjectInfo(pDTO);
 
-        if(prjresult > 0) {
+        if (prjresult > 0) {
             int cnt = projectService.selectProjectInfo(pname);
             log.info(cnt);
 
@@ -69,7 +69,7 @@ public class ProjectController {
 
                 String saveFilePath = FILE_UPLOAD_SAVE_PATH;
 
-                String fullFileInfo = saveFilePath + "/" + saveFileName ;
+                String fullFileInfo = saveFilePath + "/" + saveFileName;
 
                 log.info("저장되는 파일명 : " + fullFileInfo);
 
@@ -84,7 +84,7 @@ public class ProjectController {
 
                 int fileresult = projectService.insertFileInfo(fDTO);
 
-                if(fileresult > 0) {
+                if (fileresult > 0) {
                     log.info("파일 insert 성공");
                 } else {
                     log.info("파일 insert 실패");
@@ -100,6 +100,7 @@ public class ProjectController {
         return "/redirect";
     }
 
+
     @RequestMapping(value = "pnameCheck")
     @ResponseBody
     public String pnameCheck(HttpServletResponse response, HttpServletRequest request) throws Exception {
@@ -109,7 +110,7 @@ public class ProjectController {
 
         int cnt = projectService.pnameCheck(pname);
 
-        if(cnt==0){
+        if (cnt == 0) {
             return "0";
         } else {
             return "1";
@@ -124,7 +125,7 @@ public class ProjectController {
 
         List<ProjectDTO> rList = null;
 
-        String userid = CmmUtil.nvl((String)session.getAttribute("username"));
+        String userid = CmmUtil.nvl((String) session.getAttribute("username"));
 
         ProjectDTO pDTO = new ProjectDTO();
 
@@ -132,7 +133,7 @@ public class ProjectController {
 
         rList = projectService.getProjectInfo(pDTO);
 
-        if(rList == null) {
+        if (rList == null) {
             rList = new ArrayList<ProjectDTO>();
         }
 

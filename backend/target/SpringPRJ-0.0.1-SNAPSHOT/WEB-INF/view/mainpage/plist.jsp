@@ -12,7 +12,7 @@
             integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc="
             crossorigin="anonymous"
     ></script>
-    
+
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta
@@ -270,7 +270,7 @@
             ></i>
             </li>
             <li class="nav-item">
-                <a href="#"
+                <a href="/portfolio.do"
                 ><i class="icon-folder3"></i
                 ><span
                         data-i18n="nav.form_layouts.form_layout_basic"

@@ -35,21 +35,44 @@ public class MainController {
     }
 
     @RequestMapping(value = "main")
-    public String main() {
+    public String main(HttpSession session) {
         log.info(this.getClass().getName() + " : main 호출");
+
+        if (CmmUtil.nvl((String) session.getAttribute("userName")).equals("")) {
+            return "home";
+        }
+
         return "/mainpage/main";
     }
 
     @RequestMapping(value = "padd")
-    public String padd() {
+    public String padd(HttpSession session) {
         log.info(this.getClass().getName() + " : padd 호출");
+        if (CmmUtil.nvl((String) session.getAttribute("userName")).equals("")) {
+            return "home";
+        }
         return "/mainpage/padd";
     }
 
     @RequestMapping(value = "plist")
-    public String plist() {
+    public String plist(HttpSession session) {
         log.info(this.getClass().getName() + " : plist 호출");
+
+        if (CmmUtil.nvl((String) session.getAttribute("userName")).equals("")) {
+            return "home";
+        }
+
         return "/mainpage/plist";
+    }
+
+    @RequestMapping(value = "portfolio")
+    public String portfolio(HttpSession session) {
+        log.info(this.getClass().getName() + " : portfolio 호출");
+
+        if (CmmUtil.nvl((String) session.getAttribute("userName")).equals("")) {
+            return "home";
+        }
+        return "/mainpage/portfolio";
     }
 
     @RequestMapping(value = "logout")

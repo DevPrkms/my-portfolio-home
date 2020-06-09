@@ -252,7 +252,7 @@
             ></i>
             </li>
             <li class="nav-item">
-                <a href="#"
+                <a href="/portfolio.do"
                 ><i class="icon-folder3"></i
                 ><span
                         data-i18n="nav.form_layouts.form_layout_basic"
