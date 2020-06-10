@@ -264,7 +264,7 @@
             ></i>
             </li>
             <li class="nav-item active">
-                <a href="/portfolio.do"
+                <a href="#"
                 ><i class="icon-folder3"></i
                 ><span
                         data-i18n="nav.form_layouts.form_layout_basic"
@@ -312,7 +312,7 @@
                     <a class="heading-elements-toggle">
                         <i class="icon-ellipsis font-medium-3"></i>
                     </a>
-                    <div class="heading-elements visible">
+                    <div class="heading-elements">
                         <ul class="list-inline mb-0">
                             <li>
                                 <a data-action="reload">
@@ -330,7 +330,50 @@
 
                 <div class="card-body collapse in">
                     <div class="card-block">
-                        <div class="col-xl-6"></div>
+                        <div class="col-xl-6">
+                            <form class="form">
+                                <div id="prg_form"></div>
+                                <a id="prg_add">
+                                    <i class="icon-circle-plus"></i>
+                                </a>
+                            </form>
+
+                            <script>
+                                var cnt = 0;
+                                $("#prg_add").click(function () {
+                                    $("#prg_form").append(
+                                        $("<div/>", {
+                                            class: "col-sm-6",
+                                            id: "prg_col" + cnt,
+                                        })
+                                    );
+
+                                    $("#prg_col" + cnt).append(
+                                        $("<div/>", {
+                                            class: "form-group",
+                                            id: "prg" + cnt,
+                                        })
+                                    );
+
+                                    $("#prg" + cnt).append(
+                                        $("<input/>", {
+                                            type: "text",
+                                            name: "prg_name" + cnt,
+                                            class: "form-control col-sm-3",
+                                        })
+                                    );
+
+                                    $("#prg" + cnt).append(
+                                        $("<input/>", {
+                                            type: "text",
+                                            name: "prg_score" + cnt,
+                                            class: "form-control",
+                                        })
+                                    );
+                                    cnt = cnt + 1;
+                                });
+                            </script>
+                        </div>
                         <div class="col-xl-6"></div>
                     </div>
                 </div>
