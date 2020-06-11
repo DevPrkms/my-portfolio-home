@@ -129,6 +129,7 @@
         }
     </style>
 </head>
+
 <body
         data-open="click"
         data-menu="vertical-menu"
@@ -269,7 +270,7 @@
                     class="icon-ellipsis icon-ellipsis"
             ></i>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a href="#"
                 ><i class="icon-folder3"></i
                 ><span
@@ -293,7 +294,7 @@
     <div class="content-wrapper">
         <div class="content-header row">
             <div class="content-header-left col-md-6 col-xs-12 mb-1">
-                <h2 class="content-header-title">포트폴리오 제작</h2>
+                <h2 class="content-header-title">마이페이지</h2>
             </div>
             <div
                     class="content-header-right breadcrumbs-right breadcrumbs-top col-md-6 col-xs-12"
@@ -304,7 +305,7 @@
                             <a href="/main.do">메인</a>
                         </li>
                         <li class="breadcrumb-item">
-                            <a href="/portfolio.do">포트폴리오</a>
+                            <a href="#">마이페이지</a>
                         </li>
                     </ol>
                 </div>
@@ -312,178 +313,35 @@
         </div>
 
         <div class="content-body">
-            <section class="card">
-                <div class="card-header">
-                    <h4 class="card-title">프로그래밍 수준</h4>
-                    <a class="heading-elements-toggle">
-                        <i class="icon-ellipsis font-medium-3"></i>
-                    </a>
-                    <div class="heading-elements">
-                        <ul class="list-inline mb-0">
-                            <li>
-                                <a data-action="reload">
-                                    <i class="icon-reload"></i>
+            <section id="card-actions">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">내 정보</h4>
+                                <a class="heading-elements-toggle">
+                                    <i class="icon-ellipsis font-medium-3"></i>
                                 </a>
-                            </li>
-                            <li>
-                                <a data-action="expand">
-                                    <i class="icon-expand2"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="card-body collapse in">
-                    <div class="card-block">
-                        <div class="col-xl-6">
-                            <form class="form">
-                                <div id="prg_form" class="form-body"></div>
-                                <a id="prg_add">
-                                    <i class="icon-circle-plus"></i>
-                                </a>
-                                <div class="form-actions right">
-                                    <button type="button" class="btn btn-warning mr-1">
-                                        <i class="icon-cross2"></i>
-                                        취소
-                                    </button>
-                                    <button
-                                            type="button"
-                                            id="prg_save"
-                                            class="btn btn-primary"
-                                    >
-                                        <i class="icon-check2"></i>
-                                        저장
-                                    </button>
+                                <div class="heading-elements">
+                                    <ul class="list-inline mb-0">
+                                        <li>
+                                            <a data-action="collapse">
+                                                <i class="icon-minus4"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </div>
-                            </form>
+                            </div>
 
-                            <script>
-                                var prg_lang = [
-                                    "HTML",
-                                    "CSS",
-                                    "JAVASCRIPT",
-                                    "JQUERY",
-                                    "JAVA",
-                                    "C",
-                                    "C++",
-                                ];
-
-                                var prev_lang = new Array();
-
-                                var add_cnt = 1;
-                                var cnt = 0;
-                                var score = 0;
-                                $("#prg_add").click(function () {
-                                    prev_lang[cnt - 1] = $(
-                                        "#prg_name" + (cnt - 1) + " option:selected"
-                                    ).val();
-
-                                    if (add_cnt == 7) {
-                                        $("#prg_add").hide();
-                                    }
-                                    score = 0;
-                                    $("#prg_form").append(
-                                        $("<div/>", {
-                                            class: "form-group form-inline",
-                                            id: "form_inline" + cnt,
-                                        })
-                                    );
-
-                                    $("#form_inline" + cnt).append(
-                                        $("<div/>", {
-                                            class: "form-group mx-sm-3 mb-2",
-                                            id: "prg" + cnt,
-                                        })
-                                    );
-
-                                    $("#prg" + cnt).append(
-                                        $("<select/>", {
-                                            name: "prg_name" + cnt,
-                                            class: "form-control prg_select",
-                                            id: "prg_name" + cnt,
-                                        })
-                                    );
-
-                                    for (var i = 0; i < prg_lang.length; i++) {
-                                        if (prev_lang.indexOf(prg_lang[i]) == -1) {
-                                            $("#prg_name" + cnt).append(
-                                                "<option value='" +
-                                                prg_lang[i] +
-                                                "'>" +
-                                                prg_lang[i] +
-                                                "</option>"
-                                            );
-                                        }
-                                    }
-
-                                    $("#prg" + cnt).append(
-                                        $("<select />", {
-                                            name: "prg_score" + cnt,
-                                            class: "form-control",
-                                            id: "prg_score" + cnt,
-                                        })
-                                    );
-
-                                    for (var i = 0; i < 11; i++) {
-                                        if (i == 0) {
-                                            $("#prg_score" + cnt).append(
-                                                "<option value='" +
-                                                score +
-                                                "'>" +
-                                                score +
-                                                "</option>"
-                                            );
-                                            score = score + 10;
-                                        } else {
-                                            $("#prg_score" + cnt).append(
-                                                "<option value='" +
-                                                score +
-                                                "'>" +
-                                                score +
-                                                "</option>"
-                                            );
-                                            score = score + 10;
-                                        }
-                                    }
-
-                                    cnt = cnt + 1;
-                                    add_cnt = add_cnt + 1;
-                                });
-
-                                $("#prg_save").click(function () {
-
-                                    var name_arr = new Array();
-                                    var score_arr = new Array();
-                                    for (var i = 0; i < cnt; i++) {
-                                        var name = $(
-                                            "#prg_name" + i + " option:selected"
-                                        ).val();
-                                        var score = $(
-                                            "#prg_score" + i + " option:selected"
-                                        ).val();
-
-                                        name_arr[i] = name;
-                                        score_arr[i] = score;
-                                    }
-
-                                    $.ajax({
-                                        type: 'POST',
-                                        traditional : true,
-                                        data: {'name' : name_arr, 'score' : score_arr},
-                                        url: "/insertProgram.do",
-                                        success: function (data) {
-
-                                        }
-                                        ,
-                                        error: function (error) {
-                                            alert("error : " + error);
-                                        }
-                                    });
-                                });
-                            </script>
+                            <div class="card-body collapse in">
+                                <div class="card-block">
+                                    <div class="row">
+                                        <div class="col-xl-6">1 of 2</div>
+                                        <div class="col-xl-6">2 of 2</div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-xl-6"></div>
                     </div>
                 </div>
             </section>

@@ -122,6 +122,12 @@
             href="/assets/main-assets/assets/css/style.css"
     />
     <!-- END Custom CSS-->
+
+    <style>
+        .prg_select {
+            margin-right: 10px;
+        }
+    </style>
 </head>
 <body
         data-open="click"
@@ -264,7 +270,7 @@
             ></i>
             </li>
             <li class="nav-item active">
-                <a href="/portfolio.do"
+                <a href="#"
                 ><i class="icon-folder3"></i
                 ><span
                         data-i18n="nav.form_layouts.form_layout_basic"
@@ -312,7 +318,7 @@
                     <a class="heading-elements-toggle">
                         <i class="icon-ellipsis font-medium-3"></i>
                     </a>
-                    <div class="heading-elements visible">
+                    <div class="heading-elements">
                         <ul class="list-inline mb-0">
                             <li>
                                 <a data-action="reload">
@@ -330,7 +336,153 @@
 
                 <div class="card-body collapse in">
                     <div class="card-block">
-                        <div class="col-xl-6"></div>
+                        <div class="col-xl-6">
+                            <form class="form">
+                                <div id="prg_form" class="form-body"></div>
+                                <a id="prg_add">
+                                    <i class="icon-circle-plus"></i>
+                                </a>
+                                <div class="form-actions right">
+                                    <button type="button" class="btn btn-warning mr-1">
+                                        <i class="icon-cross2"></i>
+                                        취소
+                                    </button>
+                                    <button
+                                            type="button"
+                                            id="prg_save"
+                                            class="btn btn-primary"
+                                    >
+                                        <i class="icon-check2"></i>
+                                        저장
+                                    </button>
+                                </div>
+                            </form>
+
+                            <script>
+                                var prg_lang = [
+                                    "HTML",
+                                    "CSS",
+                                    "JAVASCRIPT",
+                                    "JQUERY",
+                                    "JAVA",
+                                    "C",
+                                    "C++",
+                                ];
+
+                                var prev_lang = new Array();
+
+                                var add_cnt = 1;
+                                var cnt = 0;
+                                var score = 0;
+                                $("#prg_add").click(function () {
+                                    prev_lang[cnt - 1] = $(
+                                        "#prg_name" + (cnt - 1) + " option:selected"
+                                    ).val();
+
+                                    if (add_cnt == 7) {
+                                        $("#prg_add").hide();
+                                    }
+                                    score = 0;
+                                    $("#prg_form").append(
+                                        $("<div/>", {
+                                            class: "form-group form-inline",
+                                            id: "form_inline" + cnt,
+                                        })
+                                    );
+
+                                    $("#form_inline" + cnt).append(
+                                        $("<div/>", {
+                                            class: "form-group mx-sm-3 mb-2",
+                                            id: "prg" + cnt,
+                                        })
+                                    );
+
+                                    $("#prg" + cnt).append(
+                                        $("<select/>", {
+                                            name: "prg_name" + cnt,
+                                            class: "form-control prg_select",
+                                            id: "prg_name" + cnt,
+                                        })
+                                    );
+
+                                    for (var i = 0; i < prg_lang.length; i++) {
+                                        if (prev_lang.indexOf(prg_lang[i]) == -1) {
+                                            $("#prg_name" + cnt).append(
+                                                "<option value='" +
+                                                prg_lang[i] +
+                                                "'>" +
+                                                prg_lang[i] +
+                                                "</option>"
+                                            );
+                                        }
+                                    }
+
+                                    $("#prg" + cnt).append(
+                                        $("<select />", {
+                                            name: "prg_score" + cnt,
+                                            class: "form-control",
+                                            id: "prg_score" + cnt,
+                                        })
+                                    );
+
+                                    for (var i = 0; i < 11; i++) {
+                                        if (i == 0) {
+                                            $("#prg_score" + cnt).append(
+                                                "<option value='" +
+                                                score +
+                                                "'>" +
+                                                score +
+                                                "</option>"
+                                            );
+                                            score = score + 10;
+                                        } else {
+                                            $("#prg_score" + cnt).append(
+                                                "<option value='" +
+                                                score +
+                                                "'>" +
+                                                score +
+                                                "</option>"
+                                            );
+                                            score = score + 10;
+                                        }
+                                    }
+
+                                    cnt = cnt + 1;
+                                    add_cnt = add_cnt + 1;
+                                });
+
+                                $("#prg_save").click(function () {
+
+                                    var name_arr = new Array();
+                                    var score_arr = new Array();
+                                    for (var i = 0; i < cnt; i++) {
+                                        var name = $(
+                                            "#prg_name" + i + " option:selected"
+                                        ).val();
+                                        var score = $(
+                                            "#prg_score" + i + " option:selected"
+                                        ).val();
+
+                                        name_arr[i] = name;
+                                        score_arr[i] = score;
+                                    }
+
+                                    $.ajax({
+                                        type: 'POST',
+                                        traditional : true,
+                                        data: {'name' : name_arr, 'score' : score_arr},
+                                        url: "/insertProgram.do",
+                                        success: function (data) {
+
+                                        }
+                                        ,
+                                        error: function (error) {
+                                            alert("error : " + error);
+                                        }
+                                    });
+                                });
+                            </script>
+                        </div>
                         <div class="col-xl-6"></div>
                     </div>
                 </div>

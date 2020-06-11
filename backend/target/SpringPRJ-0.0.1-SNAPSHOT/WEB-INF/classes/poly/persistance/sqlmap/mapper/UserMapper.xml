@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="poly.persistance.mapper.IUserMapper">
+    <select id="getExist" parameterType="String" resultType="Integer">
+        SELECT COUNT(*)
+        FROM program_language
+        WHERE USER_ID = #{userId}
+    </select>
+
+    <delete id="deleteProgram" parameterType="String">
+        DELETE
+        FROM program_language
+        WHERE USER_ID = #{userId}
+    </delete>
+
+    <insert id="insertProgram" parameterType="ArrayList">
+        INSERT INTO program_language (
+        USER_ID,
+        PROGRAM_NAME,
+        PROGRAM_SCORE,
+        REG_ID,
+        REG_DT,
+        CHG_ID
+        )VALUES
+        <foreach collection="list" item="item" index="index" open="(" separator="),(" close=")">
+            #{item.user_id},
+            #{item.program_name},
+            #{item.program_score},
+            #{item.user_id},
+            SYSDATE(),
+            #{item.user_id}
+        </foreach>
+    </insert>
+</mapper>

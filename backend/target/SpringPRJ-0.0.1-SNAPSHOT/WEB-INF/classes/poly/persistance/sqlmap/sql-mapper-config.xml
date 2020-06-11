@@ -8,5 +8,6 @@
         <typeAlias type="poly.dto.MailDTO" alias="MailDTO"/>
         <typeAlias type="poly.dto.ProjectDTO" alias="ProjectDTO"/>
         <typeAlias type="poly.dto.FileDTO" alias="FileDTO"/>
+        <typeAlias type="poly.dto.ProgramDTO" alias="ProgramDTO"/>
     </typeAliases>
 </configuration>
