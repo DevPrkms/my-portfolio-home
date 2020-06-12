@@ -31,4 +31,17 @@
             #{item.user_id}
         </foreach>
     </insert>
+
+    <select id="getPrograming" parameterType="ProgramDTO" resultType="ProgramDTO">
+        SELECT PROGRAM_NAME  AS program_name,
+               PROGRAM_SCORE AS program_score
+        FROM program_language
+        WHERE USER_ID = #{user_id}
+    </select>
+
+    <update id="insertProfile" parameterType="UserDTO">
+        UPDATE user_info
+        SET USER_PROFILE = #{user_profile}
+        WHERE USER_ID = #{user_id}
+    </update>
 </mapper>

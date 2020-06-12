@@ -133,8 +133,11 @@
                             prjResult += ("<a class='card-hyper' href='#'>");
                             prjResult += ("<div class='card' style='height: auto;'>");
                             prjResult += ("<div class='card-body'>");
-                            if (json[i].)
-                            prjResult += ("<img class='card-img-top img-fluid' src='/prjimg/" + json[i].img_save_path + "' alt='Card image cap'");
+                            if (json[i].img_save_path != null) {
+                                prjResult += ("<img class='card-img-top img-fluid' src='/prjimg/" + json[i].img_save_path + "' alt='Card image cap'");
+                            } else {
+                                prjResult += ("<img class='card-img-top img-fluid' style='display: block; margin: 0px auto;' src='/prjimg/noimage/No_image.png' alt='Card image cap'");
+                            }
                             prjResult += ("<div class='card-block'>");
                             prjResult += ("<h4 class='card-title'  escapeXml='false'>" + json[i].project_name + "</h4>");
                             prjResult += ("<p class='card-text' style='height: 100px; overflow: hidden;'>" + json[i].project_contents + "</p>");
@@ -246,7 +249,7 @@
                         ><span class="user-name"><%=userNm%></span></a
                         >
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a href="#" class="dropdown-item"
+                            <a href="/mypage.do" class="dropdown-item"
                             ><i class="icon-head"></i> 내 정보 수정 </a
                             >
                             <div class="dropdown-divider"></div>

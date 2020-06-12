@@ -3,6 +3,7 @@ package poly.service.impl;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import poly.dto.ProgramDTO;
+import poly.dto.UserDTO;
 import poly.persistance.mapper.IUserMapper;
 import poly.service.IUserService;
 
@@ -25,5 +26,15 @@ public class UserService implements IUserService {
     @Override
     public int getExist(String userId) throws Exception {
         return userMapper.getExist(userId);
+    }
+
+    @Override
+    public List<ProgramDTO> getPrograming(ProgramDTO pDTO) throws Exception {
+        return userMapper.getPrograming(pDTO);
+    }
+
+    @Override
+    public int insertProfile(UserDTO uDTO) throws Exception {
+        return userMapper.insertProfile(uDTO);
     }
 }

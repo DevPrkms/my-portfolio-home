@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String userNm = CmmUtil.nvl((String) session.getAttribute("userName"));
+    String userId = CmmUtil.nvl((String) session.getAttribute("userId"));
 %>
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
@@ -13,8 +14,8 @@
             crossorigin="anonymous"
     ></script>
 
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui"
@@ -27,9 +28,9 @@
             name="keywords"
             content="admin template, robust admin template, dashboard template, flat admin template, responsive admin template, web app"
     />
-    <meta name="author" content="PIXINVENT" />
+    <meta name="author" content="PIXINVENT"/>
     <title>My Portfolio</title>
-    <link rel="stylesheet" href="/assets/main-assets/assets/css/font.css" />
+    <link rel="stylesheet" href="/assets/main-assets/assets/css/font.css"/>
     <link
             rel="apple-touch-icon"
             sizes="60x60"
@@ -55,9 +56,9 @@
             type="image/x-icon"
             href="/assets/main-assets/app-assets/images/ico/favicon.ico"
     />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-touch-fullscreen" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-touch-fullscreen" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
     <!-- BEGIN VENDOR CSS-->
     <link
             rel="stylesheet"
@@ -123,6 +124,9 @@
     />
     <!-- END Custom CSS-->
 
+    <!-- Progress bar -->
+    <link rel="stylesheet" href="/assets/css/jquery.lineProgressbar.css"/>
+
     <style>
         .prg_select {
             margin-right: 10px;
@@ -135,6 +139,7 @@
         data-col="2-columns"
         class="vertical-layout vertical-menu 2-columns fixed-navbar"
 >
+
 <!-- navbar-fixed-top-->
 <nav
         class="header-navbar navbar navbar-with-menu navbar-fixed-top navbar-semi-dark navbar-shadow"
@@ -185,11 +190,11 @@
                         ><span class="avatar avatar-online"
                         ><img
                                 src="/assets/main-assets/app-assets/images/portrait/small/avatar-s-1.png"
-                                alt="avatar" /><i></i></span
+                                alt="avatar"/><i></i></span
                         ><span class="user-name"><%=userNm%></span></a
                         >
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a href="#" class="dropdown-item"
+                            <a href="/mypage.do" class="dropdown-item"
                             ><i class="icon-head"></i> 내 정보 수정
                             </a>
                             <div class="dropdown-divider"></div>
@@ -270,7 +275,7 @@
             ></i>
             </li>
             <li class="nav-item active">
-                <a href="#"
+                <a href="/portfolio.do"
                 ><i class="icon-folder3"></i
                 ><span
                         data-i18n="nav.form_layouts.form_layout_basic"
@@ -321,11 +326,6 @@
                     <div class="heading-elements">
                         <ul class="list-inline mb-0">
                             <li>
-                                <a data-action="reload">
-                                    <i class="icon-reload"></i>
-                                </a>
-                            </li>
-                            <li>
                                 <a data-action="expand">
                                     <i class="icon-expand2"></i>
                                 </a>
@@ -337,6 +337,7 @@
                 <div class="card-body collapse in">
                     <div class="card-block">
                         <div class="col-xl-6">
+                            <h4 class="card-title">추가/변경</h4>
                             <form class="form">
                                 <div id="prg_form" class="form-body"></div>
                                 <a id="prg_add">
@@ -469,11 +470,16 @@
 
                                     $.ajax({
                                         type: 'POST',
-                                        traditional : true,
-                                        data: {'name' : name_arr, 'score' : score_arr},
+                                        traditional: true,
+                                        data: {'name': name_arr, 'score': score_arr},
                                         url: "/insertProgram.do",
                                         success: function (data) {
-
+                                            if (data == 1) {
+                                                alert("저장되었습니다.");
+                                                location.reload();
+                                            } else if (data == 0) {
+                                                alert("서버 오류입니다. 다시 시도해주세요.");
+                                            }
                                         }
                                         ,
                                         error: function (error) {
@@ -483,9 +489,70 @@
                                 });
                             </script>
                         </div>
-                        <div class="col-xl-6"></div>
+                        <div class="col-xl-6" id="prg_level">
+                            <h4 class="card-title">내 프로그래밍 수준</h4>
+                            <script>
+                                $(window).on("load", function () {
+                                    var userId = '<%=userId%>';
+                                    var gotocnt = 0;
+                                    $.ajax({
+                                        type: 'POST',
+                                        data: {'userId': userId},
+                                        url: "/getPrograming.do",
+                                        success: function (json) {
+                                            if (json.length == 0) {
+                                                gotocnt = 0;
+                                                $("#prg_level").append(
+                                                    "<h4 class='card-title' style='color: red'> 정보가 없습니다. </h4>"
+                                                );
+                                            } else {
+                                                for (i = 0; i < json.length; i++) {
+                                                    var prg_name = json[i].program_name;
+                                                    var prg_score = json[i].program_score;
+
+                                                    $("#prg_level").append(
+                                                        "<p>" + prg_name + "</p>"
+                                                    );
+
+                                                    $("#prg_level").append(
+                                                        "<div id='prg_bar" + i + "'></div>"
+                                                    );
+
+                                                    $("#prg_bar" + i).LineProgressbar({
+                                                        percentage: prg_score,
+                                                        fillBackgroundColor: ("#" + Math.round(Math.random() * 0xffffff).toString(16)),
+                                                        radius: '15px'
+                                                    });
+                                                }
+                                                gotocnt = 1;
+                                            }
+                                        },
+                                        error: function (error) {
+                                            alert("error : " + error);
+                                        }
+                                    })
+
+                                    $("#goto").click(function () {
+                                        if (gotocnt == 0) {
+                                            alert("프로그래밍 수준 입력 후 이용가능합니다.");
+                                            return null;
+                                        } else {
+                                            alert("이동함");
+                                        }
+                                    })
+                                });
+                            </script>
+                        </div>
                     </div>
                 </div>
+            </section>
+            <section>
+                <a href="#" id="goto">
+                    <h4 class="card-title" style="color: #1d2b36">
+                        <i class="icon-sign-in" aria-hidden="true"></i>
+                        포트폴리오 페이지로 이동
+                    </h4>
+                </a>
             </section>
         </div>
     </div>
@@ -499,6 +566,9 @@
         </span>
     </p>
 </footer>
+<!-- progress bar -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js"></script>
+<script src="/assets/js/jquery.lineProgressbar.js"></script>
 
 <!-- BEGIN VENDOR JS-->
 <script

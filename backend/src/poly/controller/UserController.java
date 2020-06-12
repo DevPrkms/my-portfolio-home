@@ -2,17 +2,25 @@ package poly.controller;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import poly.dto.ProgramDTO;
+import poly.dto.UserDTO;
 import poly.persistance.mapper.IUserMapper;
 import poly.service.IUserService;
 import poly.util.CmmUtil;
+import poly.util.DateUtil;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +34,8 @@ public class UserController {
 
     @Resource(name = "UserMapper")
     private IUserMapper userMapper;
+
+    final private String FILE_UPLOAD_SAVE_PATH = "C:/Users/data-lab1/Desktop/개인프로젝트/My Portfolio/backend/WebContent/profileimg";
 
     @RequestMapping(value = "insertProgram")
     @ResponseBody
@@ -53,12 +63,89 @@ public class UserController {
             userMapper.deleteProgram(userId);
             log.info("삭제완료");
             int res = userService.insertProgram(rList);
-            log.info("삽입완료");
+
+            if (res > 0) {
+                return "1";
+            } else {
+                return "0";
+            }
         } else {
             int res = userService.insertProgram(rList);
+
+            if (res > 0) {
+                return "1";
+            } else {
+                return "0";
+            }
+        }
+    }
+
+    @RequestMapping(value = "/getPrograming")
+    @ResponseBody
+    public List<ProgramDTO> getPrograming(HttpServletResponse response, HttpServletRequest request) throws Exception {
+
+        log.info(this.getClass().getName() + " : getPrograming 호출");
+
+        String userId = CmmUtil.nvl((String) request.getParameter("userId"));
+
+        List<ProgramDTO> rList = new ArrayList<>();
+
+        ProgramDTO pDTO = new ProgramDTO();
+
+        pDTO.setUser_id(userId);
+
+        rList = userService.getPrograming(pDTO);
+
+        System.out.println("rList : " + rList.size());
+
+        return rList;
+    }
+
+    @RequestMapping(value = "insertProfile", method = RequestMethod.POST)
+    public String insertProfile(HttpServletRequest request, HttpServletResponse response, Model model, HttpSession session, @RequestParam(value = "profileimg") MultipartFile mf) throws Exception {
+
+        log.info(this.getClass().getName() + " : insertProfile 호출");
+
+        String referer = CmmUtil.nvl((String) request.getHeader("REFERER"));
+        String userName = CmmUtil.nvl((String) session.getAttribute("userName"));
+        String userId = CmmUtil.nvl((String) session.getAttribute("userId"));
+
+        // 파일 저장 변수 선언 부분
+        String originalFileName = mf.getOriginalFilename();
+        Long fileSize = mf.getSize();
+        log.info("파일 사이즈 : " + fileSize);
+        log.info("원래 파일 명 : " + originalFileName);
+
+        String ext = originalFileName.substring(originalFileName.lastIndexOf(".") + 1, originalFileName.length()).toLowerCase();
+
+        String saveFileName = userName + "." + ext;
+
+        if (ext.equals("jpeg") || ext.equals("jpg") || ext.equals("gif") || ext.equals("png")) {
+
+            log.info("saveFileName : " + saveFileName);
+
+            String saveFilePath = FILE_UPLOAD_SAVE_PATH;
+
+            String fullFileInfo = saveFilePath + "/" + saveFileName;
+
+            log.info("저장되는 파일명 : " + fullFileInfo);
+
+            File file = new File(fullFileInfo);
+            if(file.exists()){
+                file.delete();
+            }
+
+            mf.transferTo(new File(fullFileInfo));
+
+            UserDTO uDTO = new UserDTO();
+
+            uDTO.setUser_profile(saveFileName);
+            uDTO.setUser_id(userId);
+
+            int res = userService.insertProfile(uDTO);
         }
 
-        return "/redirect";
+        return null;
     }
 
 }

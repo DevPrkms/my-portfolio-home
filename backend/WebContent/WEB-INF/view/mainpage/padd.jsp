@@ -172,7 +172,7 @@
                         ><span class="user-name"><%=userNm%></span></a
                         >
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a href="#" class="dropdown-item"
+                            <a href="/mypage.do" class="dropdown-item"
                             ><i class="icon-head"></i> 내 정보 수정 </a
                             >
                             <div class="dropdown-divider"></div>

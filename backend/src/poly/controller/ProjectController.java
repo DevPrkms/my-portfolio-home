@@ -54,6 +54,7 @@ public class ProjectController {
         log.info("원래 파일 명 : " + originalFileName);
 
         String ext = originalFileName.substring(originalFileName.lastIndexOf(".") + 1, originalFileName.length()).toLowerCase();
+        System.out.println("ext : " + ext);
 
         String saveFileName = i_name + "_" + DateUtil.getDateTime("HHmmss") + "." + ext;
 
@@ -63,7 +64,9 @@ public class ProjectController {
         pDTO.setProject_day(ptime);
         pDTO.setProject_contents(pcontents);
         pDTO.setReg_id(regid);
-        pDTO.setImg_save_path(saveFileName);
+        if(!ext.equals("")) {
+            pDTO.setImg_save_path(saveFileName);
+        }
 
         int prjresult = projectService.insertProjectInfo(pDTO);
 

@@ -12,6 +12,15 @@ public class UserDTO {
     private String chg_dt;
     private String chg_id;
     private String email_vaild;
+    private String user_profile;
+
+    public String getUser_profile() {
+        return user_profile;
+    }
+
+    public void setUser_profile(String user_profile) {
+        this.user_profile = user_profile;
+    }
 
     public String getUser_no() {
         return user_no;

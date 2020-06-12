@@ -13,8 +13,8 @@
             crossorigin="anonymous"
     ></script>
 
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta
             name="viewport"
             content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui"
@@ -27,9 +27,9 @@
             name="keywords"
             content="admin template, robust admin template, dashboard template, flat admin template, responsive admin template, web app"
     />
-    <meta name="author" content="PIXINVENT" />
+    <meta name="author" content="PIXINVENT"/>
     <title>My Portfolio</title>
-    <link rel="stylesheet" href="/assets/main-assets/assets/css/font.css" />
+    <link rel="stylesheet" href="/assets/main-assets/assets/css/font.css"/>
     <link
             rel="apple-touch-icon"
             sizes="60x60"
@@ -55,9 +55,9 @@
             type="image/x-icon"
             href="/assets/main-assets/app-assets/images/ico/favicon.ico"
     />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-touch-fullscreen" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-touch-fullscreen" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
     <!-- BEGIN VENDOR CSS-->
     <link
             rel="stylesheet"
@@ -124,8 +124,17 @@
     <!-- END Custom CSS-->
 
     <style>
-        .prg_select {
-            margin-right: 10px;
+        #profile_label {
+            margin: 0 auto;
+            width: 200px;
+            display: block;
+            padding: 10px 20px;
+            color: #999;
+            vertical-align: middle;
+            background-color: #fdfdfd;
+            cursor: pointer;
+            border: 1px solid #ebebeb;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -186,11 +195,11 @@
                         ><span class="avatar avatar-online"
                         ><img
                                 src="/assets/main-assets/app-assets/images/portrait/small/avatar-s-1.png"
-                                alt="avatar" /><i></i></span
+                                alt="avatar"/><i></i></span
                         ><span class="user-name"><%=userNm%></span></a
                         >
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a href="#" class="dropdown-item"
+                            <a href="/mypage.do" class="dropdown-item"
                             ><i class="icon-head"></i> 내 정보 수정
                             </a>
                             <div class="dropdown-divider"></div>
@@ -271,7 +280,7 @@
             ></i>
             </li>
             <li class="nav-item">
-                <a href="#"
+                <a href="/portfolio.do"
                 ><i class="icon-folder3"></i
                 ><span
                         data-i18n="nav.form_layouts.form_layout_basic"
@@ -336,7 +345,38 @@
                             <div class="card-body collapse in">
                                 <div class="card-block">
                                     <div class="row">
-                                        <div class="col-xl-6">1 of 2</div>
+                                        <div class="col-xl-6">
+                                            <div class="card-header no-border text-xs-center">
+                                                <img style="width: 200px; height: 200px; border-radius: 50%; margin-bottom: 10px;"
+                                                     src="/prjimg/테스트%20프로젝트3_175529.png"
+                                                     class="rounded-circlr img-fluid center-block">
+                                                <h4 style="margin-bottom: 10px;" class="card-title"><%=userNm%></h4>
+                                                <form id="insertProfile" action="/insertProfile.do" enctype="multipart/form-data"
+                                                      method="post">
+                                                    <label id="profile_label" for="profileimg">업로드</label>
+                                                    <input type="file" style="display: none;" id="profileimg" name="profileimg" accept="image/*" onchange="chk_file_type(this)"/>
+                                                </form>
+                                                <script>
+                                                    function chk_file_type(obj) {
+                                                        var file_kind = obj.value.lastIndexOf('.');
+                                                        var file_name = obj.value.substring(file_kind + 1, obj.length);
+                                                        var file_type = file_name.toLowerCase();
+
+                                                        var check_file_type = new Array();
+                                                        check_file_type = ['jpg','gif','png','jpeg','bmp'];
+
+                                                        if(check_file_type.indexOf(file_type)==-1){
+                                                            alert("이미지 파일만 선택할 수 있습니다.");
+                                                            var parent_Obj=obj.parentNode
+                                                            var node = parent_Obj.replaceChild(obj.cloneNode(true), obj);
+                                                            return false;
+                                                        } else {
+                                                            $("#insertProfile").submit();
+                                                        }
+                                                    }
+                                                </script>
+                                            </div>
+                                        </div>
                                         <div class="col-xl-6">2 of 2</div>
                                     </div>
                                 </div>

@@ -75,6 +75,17 @@ public class MainController {
         return "/mainpage/portfolio";
     }
 
+    @RequestMapping(value = "mypage")
+    public String mypage(HttpSession session) {
+        log.info(this.getClass().getName() + " : mypage 호출");
+
+        if(CmmUtil.nvl((String) session.getAttribute("userName")).equals("")) {
+            return "home";
+        }
+
+        return "/mainpage/mypage";
+    }
+
     @RequestMapping(value = "logout")
     public String logout(Model model, HttpSession session) {
         log.info(this.getClass().getName() + " : logout 호출");

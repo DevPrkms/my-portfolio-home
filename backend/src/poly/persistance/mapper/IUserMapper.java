@@ -2,6 +2,7 @@ package poly.persistance.mapper;
 
 import config.Mapper;
 import poly.dto.ProgramDTO;
+import poly.dto.UserDTO;
 
 import java.util.List;
 
@@ -12,4 +13,8 @@ public interface IUserMapper {
     int getExist(String userId) throws Exception;
 
     void deleteProgram(String userId) throws Exception;
+
+    List<ProgramDTO> getPrograming(ProgramDTO pDTO) throws Exception;
+
+    int insertProfile(UserDTO uDTO) throws Exception;
 }
