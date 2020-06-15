@@ -5,6 +5,7 @@ import org.apache.tools.ant.Project;
 import org.springframework.stereotype.Service;
 import poly.dto.FileDTO;
 import poly.dto.ProjectDTO;
+import poly.dto.WordDTO;
 import poly.persistance.mapper.IProjectMapper;
 import poly.persistance.redis.IRedisMapper;
 import poly.service.IProjectService;
@@ -83,5 +84,10 @@ public class ProjectService implements IProjectService {
         log.info(this.getClass().getName() + " : getProjectInfo 종료");
 
         return rList;
+    }
+
+    @Override
+    public List<WordDTO> getWord(String userId) throws Exception {
+        return projectMapper.getWord(userId);
     }
 }

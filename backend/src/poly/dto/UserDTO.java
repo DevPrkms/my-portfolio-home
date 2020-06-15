@@ -13,6 +13,33 @@ public class UserDTO {
     private String chg_id;
     private String email_vaild;
     private String user_profile;
+    private String user_git;
+    private String user_facebook;
+    private String user_instagram;
+
+    public String getUser_git() {
+        return user_git;
+    }
+
+    public void setUser_git(String user_git) {
+        this.user_git = user_git;
+    }
+
+    public String getUser_facebook() {
+        return user_facebook;
+    }
+
+    public void setUser_facebook(String user_facebook) {
+        this.user_facebook = user_facebook;
+    }
+
+    public String getUser_instagram() {
+        return user_instagram;
+    }
+
+    public void setUser_instagram(String user_instagram) {
+        this.user_instagram = user_instagram;
+    }
 
     public String getUser_profile() {
         return user_profile;

@@ -2,6 +2,7 @@ package poly.service;
 
 import poly.dto.FileDTO;
 import poly.dto.ProjectDTO;
+import poly.dto.WordDTO;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ public interface IProjectService {
     int pnameCheck(String pname) throws Exception;
 
     List<ProjectDTO> getProjectInfo(ProjectDTO pDTO) throws Exception;
+
+    List<WordDTO> getWord(String userId) throws Exception;
 }

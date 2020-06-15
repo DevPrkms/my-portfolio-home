@@ -1,6 +1,7 @@
 package poly.controller;
 
 import org.apache.log4j.Logger;
+import org.hsqldb.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -131,7 +132,7 @@ public class UserController {
             log.info("저장되는 파일명 : " + fullFileInfo);
 
             File file = new File(fullFileInfo);
-            if(file.exists()){
+            if (file.exists()) {
                 file.delete();
             }
 
@@ -143,9 +144,64 @@ public class UserController {
             uDTO.setUser_id(userId);
 
             int res = userService.insertProfile(uDTO);
+
+            if (res > 0) {
+                model.addAttribute("msg", "프로필 이미지가 변경되었습니다.");
+                model.addAttribute("url", "/mypage.do");
+            } else {
+                model.addAttribute("msg", "서버 오류");
+                model.addAttribute("url", referer);
+            }
         }
 
-        return null;
+        return "/redirect";
+    }
+
+    @RequestMapping(value = "/insertSNS")
+    public String insertSNS(HttpServletResponse response, HttpServletRequest request, Model model, HttpSession session) throws Exception {
+        String github = CmmUtil.nvl((String) request.getParameter("github"));
+        String facebook = CmmUtil.nvl((String) request.getParameter("facebook"));
+        String instagram = CmmUtil.nvl((String) request.getParameter("instagram"));
+        String userId = CmmUtil.nvl((String) session.getAttribute("userId"));
+
+        String referer = CmmUtil.nvl((String) request.getHeader("REFERER"));
+
+        UserDTO uDTO = new UserDTO();
+        uDTO.setUser_id(userId);
+        uDTO.setUser_git(github);
+        uDTO.setUser_facebook(facebook);
+        uDTO.setUser_instagram(instagram);
+
+        int res = userService.insertSNS(uDTO);
+
+        if (res > 0) {
+            model.addAttribute("msg", "저장이 완료되었습니다.");
+            model.addAttribute("url", "/mypage.do");
+        } else {
+            model.addAttribute("msg", "서버오류");
+            model.addAttribute("url", referer);
+        }
+
+        return "/redirect";
+    }
+
+    @RequestMapping(value = "getSNS")
+    @ResponseBody
+    public List<UserDTO> getSNS(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        String userId = CmmUtil.nvl((String) request.getParameter("userId"));
+
+        List<UserDTO> rList = new ArrayList<>();
+
+        UserDTO uDTO = new UserDTO();
+
+        uDTO.setUser_id(userId);
+
+        rList = userService.getSNS(uDTO);
+
+        System.out.println("rList : " + rList.size());
+
+        return rList;
     }
 
 }

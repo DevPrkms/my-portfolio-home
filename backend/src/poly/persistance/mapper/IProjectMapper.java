@@ -3,6 +3,7 @@ package poly.persistance.mapper;
 import config.Mapper;
 import poly.dto.FileDTO;
 import poly.dto.ProjectDTO;
+import poly.dto.WordDTO;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface IProjectMapper {
     int pnameCheck(String pname) throws Exception;
 
     List<ProjectDTO> getProjectInfo(ProjectDTO pDTO) throws Exception;
+
+    List<WordDTO> getWord(String userId) throws Exception;
 }

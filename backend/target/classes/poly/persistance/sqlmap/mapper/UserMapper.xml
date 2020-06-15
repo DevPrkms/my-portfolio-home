@@ -44,4 +44,22 @@
         SET USER_PROFILE = #{user_profile}
         WHERE USER_ID = #{user_id}
     </update>
+
+    <update id="insertSNS" parameterType="UserDTO">
+            UPDATE user_info
+            SET
+                USER_GIT = #{user_git},
+                USER_FACEBOOK = #{user_facebook},
+                USER_INSTAGRAM = #{user_instagram}
+            WHERE USER_ID = #{user_id}
+    </update>
+
+    <select id="getSNS" parameterType="UserDTO" resultType="UserDTO">
+        SELECT
+            USER_GIT AS user_git,
+            USER_FACEBOOK AS user_facebook,
+            USER_INSTAGRAM AS user_instagram
+        FROM user_info
+        WHERE USER_ID = #{user_id}
+    </select>
 </mapper>

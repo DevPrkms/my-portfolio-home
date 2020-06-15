@@ -1,4 +1,5 @@
 <%@ page import="poly.util.CmmUtil" %>
+<%@ page import="java.io.File" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String userNm = CmmUtil.nvl((String) session.getAttribute("userName"));
@@ -188,8 +189,19 @@
                                 data-toggle="dropdown"
                                 class="dropdown-toggle nav-link dropdown-user-link"
                         ><span class="avatar avatar-online"
-                        ><img
-                                src="/assets/main-assets/app-assets/images/portrait/small/avatar-s-1.png"
+                        ><img style="width: 30px; height: 30px;"
+                                <%
+                                    File f = new File("C:\\Users\\data-lab1\\Desktop\\개인프로젝트\\My Portfolio\\backend\\WebContent\\profileimg\\" + CmmUtil.nvl((String) session.getAttribute("userName")));
+                                    if (f.exists()) {
+                                %>
+                              src="/profileimg/<%=userNm%>.png"
+                                <%
+                                } else {
+                                %>
+                              src="/profileimg/noimage/No_image.png"
+                                <%
+                                    }
+                                %>
                                 alt="avatar"/><i></i></span
                         ><span class="user-name"><%=userNm%></span></a
                         >
@@ -338,6 +350,7 @@
                     <div class="card-block">
                         <div class="col-xl-6">
                             <h4 class="card-title">추가/변경</h4>
+                            <hr/>
                             <form class="form">
                                 <div id="prg_form" class="form-body"></div>
                                 <a id="prg_add">

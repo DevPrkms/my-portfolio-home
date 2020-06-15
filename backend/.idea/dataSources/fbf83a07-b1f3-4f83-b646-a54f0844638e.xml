@@ -1024,7 +1024,22 @@
       <DataType>varchar(5000)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="283" parent="237" name="PRIMARY">
+    <column id="283" parent="237" name="USER_GIT">
+      <Position>12</Position>
+      <DataType>varchar(100)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="284" parent="237" name="USER_FACEBOOK">
+      <Position>13</Position>
+      <DataType>varchar(100)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="285" parent="237" name="USER_INSTAGRAM">
+      <Position>14</Position>
+      <DataType>varchar(100)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="286" parent="237" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>USER_ID</ColNames>
       <Primary>1</Primary>

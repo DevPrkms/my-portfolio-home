@@ -1,4 +1,5 @@
 <%@ page import="poly.util.CmmUtil" %>
+<%@ page import="java.io.File" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String userNm = CmmUtil.nvl((String) session.getAttribute("userName"));
@@ -130,7 +131,7 @@
                             console.log(json[i].project_contents);
 
                             prjResult += ("<div class='col-xl-4 col-md-6 col-sm-12'>")
-                            prjResult += ("<a class='card-hyper' href='#'>");
+                            prjResult += ("<a class='card-hyper' href='/project/projectdetail?project_seq=" + json[i].project_seq + "'>");
                             prjResult += ("<div class='card' style='height: auto;'>");
                             prjResult += ("<div class='card-body'>");
                             if (json[i].img_save_path != null) {
@@ -243,8 +244,19 @@
                                 data-toggle="dropdown"
                                 class="dropdown-toggle nav-link dropdown-user-link"
                         ><span class="avatar avatar-online"
-                        ><img
-                                src="/assets/main-assets/app-assets/images/portrait/small/avatar-s-1.png"
+                        ><img style="width: 30px; height: 30px;"
+                                <%
+                                    File f = new File("C:\\Users\\data-lab1\\Desktop\\개인프로젝트\\My Portfolio\\backend\\WebContent\\profileimg\\" + CmmUtil.nvl((String) session.getAttribute("userName")));
+                                    if (f.exists()) {
+                                %>
+                              src="/profileimg/<%=userNm%>.png"
+                                <%
+                                } else {
+                                %>
+                              src="/profileimg/noimage/No_image.png"
+                                <%
+                                    }
+                                %>
                                 alt="avatar"/><i></i></span
                         ><span class="user-name"><%=userNm%></span></a
                         >

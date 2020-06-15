@@ -17,4 +17,8 @@ public interface IUserMapper {
     List<ProgramDTO> getPrograming(ProgramDTO pDTO) throws Exception;
 
     int insertProfile(UserDTO uDTO) throws Exception;
+
+    int insertSNS(UserDTO uDTO) throws Exception;
+
+    List<UserDTO> getSNS(UserDTO uDTO) throws Exception;
 }

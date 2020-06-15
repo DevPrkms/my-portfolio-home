@@ -37,4 +37,14 @@ public class UserService implements IUserService {
     public int insertProfile(UserDTO uDTO) throws Exception {
         return userMapper.insertProfile(uDTO);
     }
+
+    @Override
+    public int insertSNS(UserDTO uDTO) throws Exception {
+        return userMapper.insertSNS(uDTO);
+    }
+
+    @Override
+    public List<UserDTO> getSNS(UserDTO uDTO) throws Exception {
+        return userMapper.getSNS(uDTO);
+    }
 }

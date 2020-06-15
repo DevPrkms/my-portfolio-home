@@ -1,7 +1,11 @@
 <%@ page import="poly.util.CmmUtil" %>
+<%@ page import="java.io.File" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+    String userId = CmmUtil.nvl((String) session.getAttribute("userId"));
     String userNm = CmmUtil.nvl((String) session.getAttribute("userName"));
+    String userEmail = CmmUtil.nvl((String) session.getAttribute("userEmail"));
+    String userPhone = CmmUtil.nvl((String) session.getAttribute("userPhone"));
 %>
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
@@ -136,6 +140,33 @@
             border: 1px solid #ebebeb;
             border-radius: 5px;
         }
+
+        .sns-icon {
+            margin-right: 10px;
+        }
+
+        .sns-wrapper {
+            margin-top: 25%;
+            text-align: center;
+            font-size: 3rem;
+        }
+
+        .sns-wrapper a{
+            color: #1d2b36;
+        }
+        .sns-wrapper a:active{
+            color: #1d2b36;
+        }
+        .sns-wrapper a:visited{
+            color: #1d2b36;
+        }
+        .sns-wrapper a:hover{
+            color: #1d2b36;
+        }
+
+        .sns-wrapper i{
+            margin-right: 30px;
+        }
     </style>
 </head>
 
@@ -193,8 +224,19 @@
                                 data-toggle="dropdown"
                                 class="dropdown-toggle nav-link dropdown-user-link"
                         ><span class="avatar avatar-online"
-                        ><img
-                                src="/assets/main-assets/app-assets/images/portrait/small/avatar-s-1.png"
+                        ><img style="width: 30px; height: 30px;"
+                                <%
+                                    File s = new File("C:\\Users\\data-lab1\\Desktop\\개인프로젝트\\My Portfolio\\backend\\WebContent\\profileimg\\" + CmmUtil.nvl((String) session.getAttribute("userName")));
+                                    if (s.exists()) {
+                                %>
+                              src="/profileimg/<%=userNm%>.png"
+                                <%
+                                } else {
+                                %>
+                              src="/profileimg/noimage/No_image.png"
+                                <%
+                                    }
+                                %>
                                 alt="avatar"/><i></i></span
                         ><span class="user-name"><%=userNm%></span></a
                         >
@@ -348,13 +390,28 @@
                                         <div class="col-xl-6">
                                             <div class="card-header no-border text-xs-center">
                                                 <img style="width: 200px; height: 200px; border-radius: 50%; margin-bottom: 10px;"
-                                                     src="/prjimg/테스트%20프로젝트3_175529.png"
+                                                    <%
+                                                        File f = new File("C:\\Users\\data-lab1\\Desktop\\개인프로젝트\\My Portfolio\\backend\\WebContent\\profileimg\\" + CmmUtil.nvl((String) session.getAttribute("userName")));
+                                                        if (f.exists()) {
+                                                    %>
+                                                     src="/profileimg/<%=userNm%>.png"
+                                                    <%
+                                                        } else {
+                                                    %>
+                                                     src="/profileimg/noimage/No_image.png"
+                                                    <%
+                                                        }
+                                                    %>
                                                      class="rounded-circlr img-fluid center-block">
-                                                <h4 style="margin-bottom: 10px;" class="card-title"><%=userNm%></h4>
-                                                <form id="insertProfile" action="/insertProfile.do" enctype="multipart/form-data"
+                                                <h4 style="margin-bottom: 10px;" class="card-title"><%=userNm%>
+                                                </h4>
+                                                <form id="insertProfile" action="/insertProfile.do"
+                                                      enctype="multipart/form-data"
                                                       method="post">
                                                     <label id="profile_label" for="profileimg">업로드</label>
-                                                    <input type="file" style="display: none;" id="profileimg" name="profileimg" accept="image/*" onchange="chk_file_type(this)"/>
+                                                    <input type="file" style="display: none;" id="profileimg"
+                                                           name="profileimg" accept="image/*"
+                                                           onchange="chk_file_type(this)"/>
                                                 </form>
                                                 <script>
                                                     function chk_file_type(obj) {
@@ -363,11 +420,11 @@
                                                         var file_type = file_name.toLowerCase();
 
                                                         var check_file_type = new Array();
-                                                        check_file_type = ['jpg','gif','png','jpeg','bmp'];
+                                                        check_file_type = ['jpg', 'gif', 'png', 'jpeg', 'bmp'];
 
-                                                        if(check_file_type.indexOf(file_type)==-1){
+                                                        if (check_file_type.indexOf(file_type) == -1) {
                                                             alert("이미지 파일만 선택할 수 있습니다.");
-                                                            var parent_Obj=obj.parentNode
+                                                            var parent_Obj = obj.parentNode
                                                             var node = parent_Obj.replaceChild(obj.cloneNode(true), obj);
                                                             return false;
                                                         } else {
@@ -377,13 +434,151 @@
                                                 </script>
                                             </div>
                                         </div>
-                                        <div class="col-xl-6">2 of 2</div>
+                                        <div class="col-xl-6">
+                                            <form class="form">
+                                                <div class="form-group">
+                                                    <label for="id">계정</label>
+                                                    <input type="text" id="id" class="form-control" readonly
+                                                           value="<%=userId%>">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="name">이름</label>
+                                                    <input type="text" id="name" class="form-control" readonly
+                                                           value="<%=userNm%>">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email">이메일</label>
+                                                    <input type="text" id="email" class="form-control" readonly
+                                                           value="<%=userEmail%>">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="phone">휴대폰</label>
+                                                    <input type="text" id="phone" class="form-control" readonly
+                                                           value="<%=userPhone%>">
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">SNS 주소</h4>
+                                <a class="heading-elements-toggle">
+                                    <i class="icon-ellipsis font-medium-3"></i>
+                                </a>
+                                <div class="heading-elements">
+                                    <ul class="list-inline mb-0">
+                                        <li>
+                                            <a data-action="collapse">
+                                                <i class="icon-minus4"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="card-body collapse in">
+                                <div class="card-block">
+                                    <div class="row">
+                                        <div class="col-xl-6">
+                                            <h4 class="card-title">추가/변경</h4>
+                                            <hr/>
+                                            <form id="sns_form" class="form" action="/insertSNS.do">
+                                                <div class="form-group">
+                                                    <label for="github"><i
+                                                            class="icon-github sns-icon"></i>GITHUB</label>
+                                                    <input type="text" name="github" class="form-control" id="github">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="facebook"><i class="icon-facebook-f sns-icon"></i>FACEBOOK</label>
+                                                    <input type="text" name="facebook" class="form-control"
+                                                           id="facebook">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="instagram"><i class="icon-instagram sns-icon"></i>INSTAGRAM</label>
+                                                    <input type="text" name="instagram" class="form-control"
+                                                           id="instagram">
+                                                </div>
+                                                <div class="form-actions right">
+                                                    <button type="button" class="btn btn-warning mr-1">
+                                                        <i class="icon-cross2"></i>
+                                                        취소
+                                                    </button>
+                                                    <button
+                                                            type="button"
+                                                            id="sns_save"
+                                                            class="btn btn-primary"
+                                                    >
+                                                        <i class="icon-check2"></i>
+                                                        저장
+                                                    </button>
+                                                </div>
+                                            </form>
+
+                                            <script>
+                                                $("#sns_save").click(function () {
+                                                    if ($("#github").val() == "" && $("#facebook").val() == "" && $("#instagram").val() == "") {
+                                                        alert("입력값이 하나라도 존재해야 합니다.");
+                                                        return null;
+                                                    } else {
+                                                        $("#sns_form").submit();
+                                                    }
+                                                })
+                                            </script>
+                                        </div>
+
+                                        <div class="col-xl-6">
+                                            <div id="sns" class="sns-wrapper">
+                                            </div>
+                                        </div>
+                                        <script>
+                                            $(window).on('load', function () {
+                                                $.ajax({
+                                                    type: 'post',
+                                                    data: {'userId': '<%=userId%>'},
+                                                    url: "/getSNS.do",
+                                                    success: function (json) {
+                                                        for(var i=0; i<json.length; i++){
+                                                            if(json[i].user_git != "") {
+                                                                $("#github").val(json[i].user_git);
+                                                                $("#sns").append(
+                                                                    "<a target='_blank' href='" + json[i].user_git + "'><i class='icon-github'></i></a>"
+                                                                );
+                                                            }
+                                                            if(json[i].user_facebook != "") {
+                                                                $("#facebook").val(json[i].user_facebook);
+                                                                $("#sns").append(
+                                                                    "<a target='_blank' href='" + json[i].user_facebook + "'><i class='icon-facebook-f'></i></a>"
+                                                                );
+                                                            }
+                                                            if(json[i].user_instagram != "") {
+                                                                $("#instagram").val(json[i].user_instagram);
+                                                                $("#sns").append(
+                                                                    "<a target='_blank' href='" + json[i].user_instagram + "'><i class='icon-instagram'></i></a>"
+                                                                );
+                                                            }
+                                                        }
+                                                    },
+                                                    error: function (error) {
+                                                        alert("error : " + error);
+                                                    }
+                                                })
+                                            })
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </section>
         </div>
     </div>

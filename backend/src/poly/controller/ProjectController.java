@@ -1,6 +1,9 @@
 package poly.controller;
 
 import org.apache.log4j.Logger;
+import org.snu.ids.ha.index.Keyword;
+import org.snu.ids.ha.index.KeywordExtractor;
+import org.snu.ids.ha.index.KeywordList;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import poly.dto.FileDTO;
 import poly.dto.ProjectDTO;
+import poly.dto.WordDTO;
 import poly.persistance.redis.IRedisMapper;
 import poly.service.IProjectService;
 import poly.util.CmmUtil;
@@ -21,7 +25,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import poly.util.maTest;
 
 @Controller
 public class ProjectController {
@@ -155,5 +161,67 @@ public class ProjectController {
         log.info(this.getClass().getName() + " : getProjectInfo 종료");
 
         return rList;
+    }
+
+    @RequestMapping(value = "/project/projectdetail", method = RequestMethod.GET)
+    public String projectdetail(HttpServletRequest request, HttpServletResponse response) {
+
+        return "/mainpage/projectdetail";
+    }
+
+    @RequestMapping(value = "/getWord")
+    @ResponseBody
+    public List<WordDTO> getWord(HttpServletResponse response, HttpServletRequest request) throws Exception {
+
+        String userId = CmmUtil.nvl((String) request.getParameter("userId"));
+
+        WordDTO wDTO = new WordDTO();
+
+        List<WordDTO> rList = new ArrayList<>();
+
+        rList = projectService.getWord(userId);
+
+        String word = "";
+
+        for(int i=0; i<rList.size(); i++){
+            word += rList.get(i).getProject_contents();
+        }
+
+        System.out.println(word);
+
+        HashMap<Integer, List<String>> hMap = new HashMap<>();
+
+        hMap = maTest(word);
+        System.out.println("hMap : " + hMap.size());
+
+        for(int j=0; j<hMap.size(); j++){
+            System.out.println("hMap : " + hMap.get(j).toString());
+        }
+
+        return rList;
+    }
+
+    public HashMap<Integer, List<String>> maTest(String word) {
+        log.info("오긴옴 ?");
+        // string to extract keywords
+        String strToExtrtKwrd = word;
+        log.info(word);
+        strToExtrtKwrd = strToExtrtKwrd.replaceAll(" ", "").replaceAll("\n", "");
+        // init KeywordExtractor
+        KeywordExtractor ke = new KeywordExtractor();
+        // extract keywords
+        KeywordList kl = ke.extractKeyword(strToExtrtKwrd, true);
+        // print result
+        HashMap<Integer, List<String>> hMap = new HashMap<>();
+        for( int i = 0; i < kl.size(); i++ ) {
+            Keyword kwrd = kl.get(i);
+            List<String> rList = new ArrayList<>();
+            rList.add(kwrd.getString() + kwrd.getCnt());
+            hMap.put(i, rList);
+            rList = new ArrayList<>();
+//            System.out.println(kwrd.getString() + "\t" + kwrd.getCnt());
+            System.out.println("hMap : " + hMap.get(i).toString());
+        }
+        return hMap;
     }
 }

@@ -1,4 +1,5 @@
 <%@ page import="poly.util.CmmUtil" %>
+<%@ page import="java.io.File" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String userNm = CmmUtil.nvl((String) session.getAttribute("userName"));
@@ -166,8 +167,19 @@
                                 data-toggle="dropdown"
                                 class="dropdown-toggle nav-link dropdown-user-link"
                         ><span class="avatar avatar-online"
-                        ><img
-                                src="/assets/main-assets/app-assets/images/portrait/small/avatar-s-1.png"
+                        ><img style="width: 30px; height: 30px;"
+                                <%
+                                    File f = new File("C:\\Users\\data-lab1\\Desktop\\개인프로젝트\\My Portfolio\\backend\\WebContent\\profileimg\\" + CmmUtil.nvl((String) session.getAttribute("userName")));
+                                    if (f.exists()) {
+                                %>
+                              src="/profileimg/<%=userNm%>.png"
+                                <%
+                                } else {
+                                %>
+                              src="/profileimg/noimage/No_image.png"
+                                <%
+                                    }
+                                %>
                                 alt="avatar"/><i></i></span
                         ><span class="user-name"><%=userNm%></span></a
                         >
@@ -360,7 +372,7 @@
                                                     <!-- 프로젝트 설명 -->
                                                     <div class="form-group">
                                                         <h6>프로젝트 설명</h6>
-                                                        <textarea id="pcontents" rows="5"
+                                                        <textarea wrap="hard" id="pcontents" cols="100" rows="5"
                                                                   class="form-control border-primary"
                                                                   name="prjcontents"
                                                                   placeholder="프로젝트 설명 입력"></textarea>

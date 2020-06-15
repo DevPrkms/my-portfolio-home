@@ -64,4 +64,11 @@
         WHERE
             REG_ID = #{reg_id}
     </select>
+
+    <select id="getWord" parameterType="String" resultType="WordDTO">
+        SELECT
+            PROJECT_CONTENTS AS project_contents
+        FROM project_info
+        WHERE reg_ID = #{userId}
+    </select>
 </mapper>
