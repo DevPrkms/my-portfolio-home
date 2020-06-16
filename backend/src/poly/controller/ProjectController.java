@@ -27,7 +27,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import poly.util.maTest;
 
 @Controller
 public class ProjectController {
@@ -70,7 +69,7 @@ public class ProjectController {
         pDTO.setProject_day(ptime);
         pDTO.setProject_contents(pcontents);
         pDTO.setReg_id(regid);
-        if(!ext.equals("")) {
+        if (!ext.equals("")) {
             pDTO.setImg_save_path(saveFileName);
         }
 
@@ -167,28 +166,5 @@ public class ProjectController {
     public String projectdetail(HttpServletRequest request, HttpServletResponse response) {
 
         return "/mainpage/projectdetail";
-    }
-
-    @RequestMapping(value = "/getWord")
-    @ResponseBody
-    public List<WordDTO> getWord(HttpServletResponse response, HttpServletRequest request) throws Exception {
-
-        String userId = CmmUtil.nvl((String) request.getParameter("userId"));
-
-        WordDTO wDTO = new WordDTO();
-
-        List<WordDTO> rList = new ArrayList<>();
-
-        rList = projectService.getWord(userId);
-
-        String word = "";
-
-        for(int i=0; i<rList.size(); i++){
-            word += rList.get(i).getProject_contents();
-        }
-
-        System.out.println(word);
-
-        return rList;
     }
 }

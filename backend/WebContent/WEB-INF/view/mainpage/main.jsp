@@ -112,8 +112,19 @@
             integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc="
             crossorigin="anonymous"
     ></script>
-    <script src="https://d3js.org/d3.v3.min.js"></script>
-    <script src="https://rawgit.com/jasondavies/d3-cloud/master/build/d3.layout.cloud.js" type="text/javascript"></script>
+
+    <!-- amchart -->
+    <script src="https://www.amcharts.com/lib/4/core.js"></script>
+    <script src="https://www.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://www.amcharts.com/lib/4/plugins/wordCloud.js"></script>
+    <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+
+    <style>
+        #wordcloud-wrapper{
+            width: 100%;
+            height: 500px;
+        }
+    </style>
 </head>
 <body
         data-open="click"
@@ -288,12 +299,35 @@
 <script>
     $(window).on('load', function () {
         $.ajax({
-            data: {'userId': '<%=userId%>'},
-            url: "/getWord.do",
+            data: {'userId' : '<%=userId%>'},
+            dataType: "JSON",
+            url: "/rConnect.do",
             success: function (json) {
-                for(var i=0; i<json.length; i++){
-                    console.log("fullWord : " + json[i].project_contents);
-                }
+                console.log(json);
+
+                am4core.ready(function() {
+                    // Themes begin
+                    am4core.useTheme(am4themes_animated);
+                    // Themes end
+                    var chart = am4core.create("wordcloud-wrapper", am4plugins_wordCloud.WordCloud);
+                    var series = chart.series.push(new am4plugins_wordCloud.WordCloudSeries());
+                    series.randomness = 0.1;
+                    series.labels.template.tooltipText = "{word}: {value}";
+                    series.fontFamily = "DoHyeon";
+                    series.data = json;
+                    series.dataFields.word = "json.word";
+                    series.dataFields.value = "json.wordCount";
+                    series.fontWeight = "700"
+                    series.accuracy = 4;
+                    series.step = 15;
+                    series.rotationThreshold = 0.7;
+                    series.angles = [0,-90];
+                    series.colors = new am4core.ColorSet();
+                    series.colors.passOptions = {};
+                    series.minFontSize = am4core.percent(3);
+
+                    $('path').hide();
+                }); // end am4core.ready()
             },
             error: function (error) {
                 alert("error : " + error);
@@ -305,6 +339,10 @@
     <div class="content-wrapper">
         <div class="content-header row">
             <div id="wordcloud-wrapper"></div>
+
+            <script type="text/javascript">
+
+            </script>
         </div>
     </div>
 </div>

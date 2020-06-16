@@ -1,6 +1,7 @@
 package poly.controller;
 
 import org.apache.log4j.Logger;
+import org.rosuda.REngine.Rserve.RConnection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -126,6 +127,16 @@ public class MainController {
                 session.setAttribute("userName", uDTO.getUser_name());
                 session.setAttribute("userEmail", uDTO.getUser_email());
                 session.setAttribute("userPhone", uDTO.getUser_phone());
+                RConnection c = new RConnection();
+                c.eval("library(tidyverse)");
+                c.eval("library(KoNLP)");
+                c.eval("useNIADic()");
+                c.eval("library(stringr)");
+                c.eval("library(reshape2)");
+                c.eval("library(dbplyr)");
+                c.eval("library(RColorBrewer)");
+                c.eval("library(wordcloud)");
+                c.close();
             }
         }
 

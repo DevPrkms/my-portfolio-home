@@ -14,6 +14,8 @@
           <element id="module-output" name="SpringPRJ" />
         </element>
         <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: org.nuiton.thirdparty:Rserve:1.8-5" />
+          <element id="library" level="project" name="Maven: org.nuiton.thirdparty:REngine:1.7-3" />
           <element id="library" level="project" name="Maven: org.apache.hadoop:hadoop-core:1.2.1" />
           <element id="library" level="project" name="Maven: commons-cli:commons-cli:1.2" />
           <element id="library" level="project" name="Maven: xmlenc:xmlenc:0.52" />

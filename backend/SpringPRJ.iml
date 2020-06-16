@@ -64,6 +64,9 @@
     </orderEntry>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
+    <orderEntry type="library" name="org.snu.ids.ha" level="project" />
+    <orderEntry type="library" name="Maven: org.nuiton.thirdparty:Rserve:1.8-5" level="project" />
+    <orderEntry type="library" name="Maven: org.nuiton.thirdparty:REngine:1.7-3" level="project" />
     <orderEntry type="library" name="Maven: org.apache.hadoop:hadoop-core:1.2.1" level="project" />
     <orderEntry type="library" name="Maven: commons-cli:commons-cli:1.2" level="project" />
     <orderEntry type="library" name="Maven: xmlenc:xmlenc:0.52" level="project" />
@@ -150,6 +153,5 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-context-support:4.3.25.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:8.0.11" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.google.protobuf:protobuf-java:2.6.0" level="project" />
-    <orderEntry type="library" name="org.snu.ids.ha" level="project" />
   </component>
 </module>
