@@ -189,39 +189,6 @@ public class ProjectController {
 
         System.out.println(word);
 
-        HashMap<Integer, List<String>> hMap = new HashMap<>();
-
-        hMap = maTest(word);
-        System.out.println("hMap : " + hMap.size());
-
-        for(int j=0; j<hMap.size(); j++){
-            System.out.println("hMap : " + hMap.get(j).toString());
-        }
-
         return rList;
-    }
-
-    public HashMap<Integer, List<String>> maTest(String word) {
-        log.info("오긴옴 ?");
-        // string to extract keywords
-        String strToExtrtKwrd = word;
-        log.info(word);
-        strToExtrtKwrd = strToExtrtKwrd.replaceAll(" ", "").replaceAll("\n", "");
-        // init KeywordExtractor
-        KeywordExtractor ke = new KeywordExtractor();
-        // extract keywords
-        KeywordList kl = ke.extractKeyword(strToExtrtKwrd, true);
-        // print result
-        HashMap<Integer, List<String>> hMap = new HashMap<>();
-        for( int i = 0; i < kl.size(); i++ ) {
-            Keyword kwrd = kl.get(i);
-            List<String> rList = new ArrayList<>();
-            rList.add(kwrd.getString() + kwrd.getCnt());
-            hMap.put(i, rList);
-            rList = new ArrayList<>();
-//            System.out.println(kwrd.getString() + "\t" + kwrd.getCnt());
-            System.out.println("hMap : " + hMap.get(i).toString());
-        }
-        return hMap;
     }
 }
