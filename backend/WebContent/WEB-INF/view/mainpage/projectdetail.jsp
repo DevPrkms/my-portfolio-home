@@ -286,7 +286,26 @@
 <div class="app-content content container-fluid">
     <div class="content-wrapper">
         <div class="content-header row"></div>
-
+        <div class="content-body">
+            <section class="card">
+                <div class="card-header">
+                    <h4 class="card-title">
+                        프로젝트 이름 들어갈 곳
+                    </h4>
+                </div>
+                <div class="card-body collapse in">
+                    <div class="card-block">
+                        <div
+                                style="width: 30%; border: 1px solid black;"
+                                class="col-sm-6"
+                        >
+                            1of2
+                        </div>
+                        <div style="width: 70%;" class="col-sm-6">2of2</div>
+                    </div>
+                </div>
+            </section>
+        </div>
     </div>
 </div>
 <!-- ////////////////////////////////////////////////////////////////////////////-->
