@@ -8,7 +8,8 @@
 			USER_NAME AS user_name,
 			USER_EMAIL AS user_email,
 			USER_PHONE AS user_phone,
-			EMAIL_VAILD AS email_vaild
+			EMAIL_VAILD AS email_vaild,
+			USER_PROFILE AS user_profile
 		FROM
 			USER_INFO
 		WHERE
@@ -63,6 +64,13 @@
 		FROM USER_INFO
 		WHERE
 			USER_EMAIL = #{userEmail}
+	</select>
+
+	<select id="nmCheck" parameterType="String" resultType="Integer">
+		SELECT COUNT(*)
+		FROM USER_INFO
+		WHERE
+			USER_NAME = #{userName}
 	</select>
 
 </mapper>

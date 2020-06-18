@@ -3,6 +3,7 @@ package poly.controller;
 import org.apache.log4j.Logger;
 import org.rosuda.REngine.Rserve.RConnection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.*;
 
 @Controller
 public class MainController {
@@ -76,6 +78,11 @@ public class MainController {
         return "/mainpage/portfolio";
     }
 
+    @RequestMapping(value = "portfolio_home")
+    public String portfolio_home() {
+        return "/mainpage/portfolio-home";
+    }
+
     @RequestMapping(value = "mypage")
     public String mypage(HttpSession session) {
         log.info(this.getClass().getName() + " : mypage 호출");
@@ -127,16 +134,8 @@ public class MainController {
                 session.setAttribute("userName", uDTO.getUser_name());
                 session.setAttribute("userEmail", uDTO.getUser_email());
                 session.setAttribute("userPhone", uDTO.getUser_phone());
-                RConnection c = new RConnection();
-                c.eval("library(tidyverse)");
-                c.eval("library(KoNLP)");
-                c.eval("useNIADic()");
-                c.eval("library(stringr)");
-                c.eval("library(reshape2)");
-                c.eval("library(dbplyr)");
-                c.eval("library(RColorBrewer)");
-                c.eval("library(wordcloud)");
-                c.close();
+                session.setAttribute("userProfile", uDTO.getUser_profile());
+                System.out.println(uDTO.getUser_profile());
             }
         }
 
@@ -234,6 +233,23 @@ public class MainController {
 
 
         return "/redirect";
+    }
+
+    @RequestMapping(value = "/nmCheck", method = RequestMethod.POST)
+    @ResponseBody
+    public String nmCheck(HttpServletRequest request) throws Exception {
+
+        log.info(this.getClass().getName() + " : nmCheck 호출");
+        String userName = CmmUtil.nvl((String) request.getParameter("userName"));
+
+        log.info("userName : " + userName);
+        int count = homeService.nmCheck(userName);
+
+        if (count == 0) {
+            return "0";
+        } else {
+            return "1";
+        }
     }
 
 }

@@ -12,5 +12,5 @@ public interface IRedisMapper {
     
     public int setProjectInfo(String key, List<ProjectDTO> pList) throws Exception; // 데이터 저장하기
     
-    public boolean setTimeOutMinute(String key, int minutes) throws Exception; // 정보 저장될 시간(TTL) 설정
+    public boolean setTimeOutMinute(String key, int seconds) throws Exception; // 정보 저장될 시간(TTL) 설정
 }

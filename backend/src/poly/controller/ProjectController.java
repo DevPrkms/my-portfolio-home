@@ -14,12 +14,14 @@ import org.springframework.web.multipart.MultipartFile;
 import poly.dto.FileDTO;
 import poly.dto.ProjectDTO;
 import poly.dto.WordDTO;
+import poly.persistance.mapper.IProjectMapper;
 import poly.persistance.redis.IRedisMapper;
 import poly.service.IProjectService;
 import poly.util.CmmUtil;
 import poly.util.DateUtil;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -35,7 +37,11 @@ public class ProjectController {
     @Resource(name = "ProjectService")
     private IProjectService projectService;
 
+    @Resource(name = "ProjectMapper")
+    private IProjectMapper projectMapper;
+
     final private String FILE_UPLOAD_SAVE_PATH = "C:/Users/data-lab1/Desktop/개인프로젝트/My Portfolio/backend/WebContent/prjimg";
+    final private String FILE_UPLOAD_SAVE_PATH_FILE = "C:/Users/data-lab1/Desktop/개인프로젝트/My Portfolio/backend/WebContent/projectfile";
 
     @RequestMapping(value = "/project/add", method = RequestMethod.POST)
     public String add(HttpServletRequest request, HttpServletResponse response, Model model, @RequestParam(value = "prjimg") MultipartFile mf) throws Exception {
@@ -48,6 +54,8 @@ public class ProjectController {
         String pname = request.getParameter("prjname");
         String ptime = request.getParameter("prjtime");
         String pcontents = request.getParameter("prjcontents");
+        pcontents = pcontents.replaceAll("\n", "<br/>");
+        System.out.println("pcontents : " + pcontents);
         String regid = request.getParameter("regid");
 
         String i_name = pname.replaceAll(match, "");
@@ -163,8 +171,113 @@ public class ProjectController {
     }
 
     @RequestMapping(value = "/project/projectdetail", method = RequestMethod.GET)
-    public String projectdetail(HttpServletRequest request, HttpServletResponse response) {
+    public String projectdetail(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
+
+        String project_seq = CmmUtil.nvl((String) request.getParameter("project_seq"));
+
+        ProjectDTO pDTO = new ProjectDTO();
+        pDTO.setProject_seq(project_seq);
+
+        pDTO = projectService.getProject(pDTO);
+
+        model.addAttribute("pDTO", pDTO);
 
         return "/mainpage/projectdetail";
+    }
+
+    @RequestMapping(value = "insertFileInfo", method = RequestMethod.POST)
+    public String insertFileInfo(HttpServletResponse response, HttpServletRequest request, HttpSession session, @RequestParam(value = "projectfile") MultipartFile mf, Model model) throws Exception {
+        log.info("insertFileInfo 접속");
+
+        String projectseq = CmmUtil.nvl((String) request.getParameter("projectseq"));
+        String projectname = CmmUtil.nvl((String) request.getParameter("projectname"));
+        String userId = CmmUtil.nvl((String) session.getAttribute("userId"));
+        String referer = CmmUtil.nvl((String) request.getHeader("REFERER"));
+
+        String originalFileName = mf.getOriginalFilename();
+        Long fileSize = mf.getSize();
+        log.info("파일 사이즈 : " + fileSize);
+        log.info("원래 파일 명 : " + originalFileName);
+
+        String ext = originalFileName.substring(originalFileName.lastIndexOf(".") + 1, originalFileName.length()).toLowerCase();
+        System.out.println("ext : " + ext);
+
+        String saveFileName = projectname + "_" + DateUtil.getDateTime("HHmmss") + "." + ext;
+
+        ProjectDTO pDTO = new ProjectDTO();
+
+        if (!ext.equals("")) {
+            String saveFilePath = FILE_UPLOAD_SAVE_PATH_FILE;
+
+            String fullFileInfo = saveFilePath + "/" + saveFileName;
+
+            mf.transferTo(new File(fullFileInfo));
+
+            FileDTO fDTO = new FileDTO();
+            fDTO.setProject_seq(projectseq);
+            fDTO.setOriginal_file_name(originalFileName);
+            fDTO.setStored_file_name(fullFileInfo);
+            fDTO.setFile_size(Long.toString(fileSize));
+            fDTO.setReg_id(userId);
+
+            int res = projectService.insertFileInfo(fDTO);
+            if (res > 0) {
+                pDTO.setProject_seq(projectseq);
+                pDTO.setFile_save_path(saveFileName);
+                projectMapper.updateFileInfo(pDTO);
+                model.addAttribute("msg", "저장되었습니다.");
+                model.addAttribute("url", "/project/projectdetail.do?project_seq=" + projectseq);
+            } else {
+                model.addAttribute("msg", " 서버오류");
+                model.addAttribute("url", referer);
+            }
+
+        } else {
+            model.addAttribute("msg", "허용되지 않은 접근입니다.");
+            model.addAttribute("url", "/plist.do");
+        }
+
+        return "/redirect";
+    }
+
+    @RequestMapping(value = "/updateContents.do")
+    public String updateContents(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
+        String projectseq = CmmUtil.nvl((String) request.getParameter("projectseq"));
+        String projectcontents = CmmUtil.nvl((String) request.getParameter("mod-contents"));
+        projectcontents = projectcontents.replaceAll("\n", "<br/>");
+
+        System.out.println(projectcontents);
+
+        ProjectDTO pDTO = new ProjectDTO();
+        pDTO.setProject_seq(projectseq);
+        pDTO.setProject_contents(projectcontents);
+
+        int result = projectService.updateContents(pDTO);
+
+        if (result > 0) {
+            model.addAttribute("msg", "수정되었습니다.");
+            model.addAttribute("url", "/project/projectdetail.do?project_seq=" + projectseq);
+        } else {
+            model.addAttribute("msg", "서버오류");
+            model.addAttribute("url", "/project/projectdetail.do?project_seq=\" + projectseq");
+        }
+
+        return "/redirect";
+    }
+
+    @RequestMapping(value = "/deleteProject")
+    public String deleteProject(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
+        String seq = CmmUtil.nvl((String) request.getParameter("projectseq"));
+
+
+        int res = projectService.deleteProject(seq);
+        if (res > 0) {
+            model.addAttribute("msg", "삭제 완료");
+            model.addAttribute("url", "/plist.do");
+        } else {
+            model.addAttribute("msg", "서버오류");
+            model.addAttribute("url", "/plist.do");
+        }
+        return "/redirect";
     }
 }

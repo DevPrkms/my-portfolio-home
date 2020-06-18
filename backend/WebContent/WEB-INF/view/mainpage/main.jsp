@@ -4,6 +4,7 @@
 <%
     String userNm = CmmUtil.nvl((String) session.getAttribute("userName"));
     String userId = CmmUtil.nvl((String) session.getAttribute("userId"));
+    String userProfile = CmmUtil.nvl((String) session.getAttribute("userProfile"));
 %>
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
@@ -182,7 +183,7 @@
                         ><span class="avatar avatar-online"
                         ><img style="width: 30px; height: 30px;"
                                 <%
-                                    File f = new File("C:\\Users\\data-lab1\\Desktop\\개인프로젝트\\My Portfolio\\backend\\WebContent\\profileimg\\" + CmmUtil.nvl((String) session.getAttribute("userName")));
+                                    File f = new File(session.getServletContext().getRealPath("/") + "profileimg/" + userProfile);
                                     if (f.exists()) {
                                 %>
                               src="/profileimg/<%=userNm%>.png"
@@ -303,20 +304,18 @@
             dataType: "JSON",
             url: "/rConnect.do",
             success: function (json) {
-                console.log(json);
-
+                if(json.length > 0) {
                 am4core.ready(function() {
                     // Themes begin
                     am4core.useTheme(am4themes_animated);
                     // Themes end
                     var chart = am4core.create("wordcloud-wrapper", am4plugins_wordCloud.WordCloud);
                     var series = chart.series.push(new am4plugins_wordCloud.WordCloudSeries());
-                    series.randomness = 0.1;
-                    series.labels.template.tooltipText = "{word}: {value}";
-                    series.fontFamily = "DoHyeon";
+                    // series.labels.template.tooltipText = "{word}: {value}";
+                    series.fontFamily = "";
                     series.data = json;
-                    series.dataFields.word = "json.word";
-                    series.dataFields.value = "json.wordCount";
+                    series.dataFields.word = "word";
+                    series.dataFields.value = "wordCount";
                     series.fontWeight = "700"
                     series.accuracy = 4;
                     series.step = 15;
@@ -324,10 +323,28 @@
                     series.angles = [0,-90];
                     series.colors = new am4core.ColorSet();
                     series.colors.passOptions = {};
-                    series.minFontSize = am4core.percent(3);
+                    series.maxFontSize = am4core.percent(30);
+                    series.randomness = 0;
+
+                    series.events.on("arrangestarted", function(ev) {
+                        ev.target.baseSprite.preloader.show(1);
+                    });
+
+                    series.events.on("arrangeprogress", function(ev) {
+                        ev.target.baseSprite.preloader.progress = ev.progress;
+                    });
 
                     $('path').hide();
                 }); // end am4core.ready()
+                } else {
+                    $("#wordcloud-wrapper").append(
+                        "<div id='non-data'>등록된 프로젝트가 없습니다.</div>"
+                    )
+                    $("#non-data").css('text-align', 'center');
+                    $("#non-data").css('font-size', '3rem');
+                    $("#non-data").css('line-height', '450px');
+                    $("#non-data").css('color', 'gray');
+                }
             },
             error: function (error) {
                 alert("error : " + error);

@@ -14,4 +14,6 @@ public interface IHomeMapper {
     int emailvaild(String userId) throws Exception;
 
     int emCheck(String userEmail) throws Exception;
+
+    int nmCheck(String userName) throws Exception;
 }

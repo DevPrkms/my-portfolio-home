@@ -80,6 +80,9 @@ $("#userId2").keyup(function () {
             success: function (data) {
                 if (data > 0) {
                     $("#idm2").html("이미 사용중인 아이디입니다.");
+                    $("#idm2").show();
+                    $("#userId2").css("background-color", "#F6CECE");
+                    nridx = 0;
                 } else {
                     $("#userId2").css("background-color", "#E1F5A9");
                     $("#idm2").hide();
@@ -131,9 +134,28 @@ $("#userName").keyup(function () {
         $("#nam").html("한글 5자, 영문 10자, 숫자만 가능합니다.");
         mridx = 0;
     } else {
-        $("#userName").css("background-color", "#E1F5A9");
-        $("#nam").hide();
-        mridx = 1;
+        $.ajax({
+            async: true,
+            type: 'POST',
+            data: {'userName': userName},
+            url: "/nmCheck.do",
+            success: function (data) {
+                if (data > 0) {
+                    $("#nam").html("이미 사용중인 이름입니다.");
+                    $("#nam").show();
+                    $("#userName").css("background-color", "#F6CECE");
+                    mridx = 0;
+                } else {
+                    $("#userName").css("background-color", "#E1F5A9");
+                    $("#nam").hide();
+                    mridx = 1;
+                }
+            }
+            ,
+            error: function (error) {
+                alert("error : " + error);
+            }
+        });
     }
 });
 
@@ -161,6 +183,8 @@ $("#userEmail").focusout(function(){
             if (data > 0) {
                 $("#emm").show();
                 $("#emm").html("이미 사용중인 이메일입니다.");
+                $("#userEmail").css("background-color", "#F6CECE");
+                eridx = 0;
             } else {
                 $("#userEmail").css("background-color", "#E1F5A9");
                 $("#emm").hide();

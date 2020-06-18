@@ -4,6 +4,7 @@
 <%
     String userNm = CmmUtil.nvl((String) session.getAttribute("userName"));
     String userId = CmmUtil.nvl((String) session.getAttribute("userId"));
+    String userProfile = CmmUtil.nvl((String) session.getAttribute("userProfile"));
 %>
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
@@ -191,7 +192,7 @@
                         ><span class="avatar avatar-online"
                         ><img style="width: 30px; height: 30px;"
                                 <%
-                                    File f = new File("C:\\Users\\data-lab1\\Desktop\\개인프로젝트\\My Portfolio\\backend\\WebContent\\profileimg\\" + CmmUtil.nvl((String) session.getAttribute("userName")));
+                                    File f = new File(session.getServletContext().getRealPath("/") + "profileimg/" + userProfile);
                                     if (f.exists()) {
                                 %>
                               src="/profileimg/<%=userNm%>.png"
@@ -357,7 +358,7 @@
                                     <i class="icon-circle-plus"></i>
                                 </a>
                                 <div class="form-actions right">
-                                    <button type="button" class="btn btn-warning mr-1">
+                                    <button type="button" class="btn btn-warning mr-1" onclick="window.location.reload();">
                                         <i class="icon-cross2"></i>
                                         취소
                                     </button>
@@ -549,8 +550,6 @@
                                         if (gotocnt == 0) {
                                             alert("프로그래밍 수준 입력 후 이용가능합니다.");
                                             return null;
-                                        } else {
-                                            alert("이동함");
                                         }
                                     })
                                 });
@@ -560,7 +559,7 @@
                 </div>
             </section>
             <section>
-                <a href="#" id="goto">
+                <a href="/portfolio_home.do" id="goto">
                     <h4 class="card-title" style="color: #1d2b36">
                         <i class="icon-sign-in" aria-hidden="true"></i>
                         포트폴리오 페이지로 이동

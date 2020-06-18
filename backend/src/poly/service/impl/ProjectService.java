@@ -77,7 +77,7 @@ public class ProjectService implements IProjectService {
             if (rList.size() > 0) {
                 redisMapper.setProjectInfo(key, rList);
 
-                redisMapper.setTimeOutMinute(key, 1);
+                redisMapper.setTimeOutMinute(key, 10);
             }
         }
 
@@ -89,5 +89,20 @@ public class ProjectService implements IProjectService {
     @Override
     public List<WordDTO> getWord(String userId) throws Exception {
         return projectMapper.getWord(userId);
+    }
+
+    @Override
+    public ProjectDTO getProject(ProjectDTO pDTO) throws Exception {
+        return projectMapper.getProject(pDTO);
+    }
+
+    @Override
+    public int updateContents(ProjectDTO pDTO) throws Exception {
+        return projectMapper.updateContents(pDTO);
+    }
+
+    @Override
+    public int deleteProject(String seq) throws Exception {
+        return projectMapper.deleteProject(seq);
     }
 }

@@ -39,9 +39,9 @@ public class RController {
 
         rList = projectService.getWord(userId);
         log.info("컨텐츠 가져옴");
-        if (rList == null) {
+        if (rList.size() == 0) {
             log.info("컨텐츠 없음");
-            rList = new ArrayList<>();
+            sList = new ArrayList<>();
         } else {
             log.info("R분석 시작");
             String[] sArr = new String[rList.size()];
@@ -49,7 +49,7 @@ public class RController {
                 sArr[i] = rList.get(i).getProject_contents();
             }
             c.assign("sArr", sArr);
-            c.eval("m_df <- sArr %>% SimplePos09 %>% melt %>% as_tibble %>% select(3,1)");
+            c.eval("m_df <- sArr %>% SimplePos09 %>% melt %>% as_tibble %>% select(2,1)");
             c.eval("m_df <- m_df %>% mutate(noun=str_match(value, '([A-Z|a-z|0-9|가-힣]+)/N')[,2]) %>% na.omit");
             c.eval("m_df <- m_df %>% count(noun, sort=TRUE)");
             c.eval("m_df <- filter(m_df,nchar(noun)>=2)");
@@ -65,9 +65,6 @@ public class RController {
                 log.info("Word : " + wDTO.getWord() + ", Count : " + wDTO.getWordCount());
                 sList.add(wDTO);
                 wDTO = null;
-            }
-            for(int i = 0; i<sList.size();i++){
-                log.info("sList Word : "+sList.get(i).getWord());
             }
         }
         c.close();

@@ -6,6 +6,7 @@
     String userNm = CmmUtil.nvl((String) session.getAttribute("userName"));
     String userEmail = CmmUtil.nvl((String) session.getAttribute("userEmail"));
     String userPhone = CmmUtil.nvl((String) session.getAttribute("userPhone"));
+    String userProfile = CmmUtil.nvl((String) session.getAttribute("userProfile"));
 %>
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
@@ -226,10 +227,10 @@
                         ><span class="avatar avatar-online"
                         ><img style="width: 30px; height: 30px;"
                                 <%
-                                    File s = new File("C:\\Users\\data-lab1\\Desktop\\개인프로젝트\\My Portfolio\\backend\\WebContent\\profileimg\\" + CmmUtil.nvl((String) session.getAttribute("userName")));
+                                    File s = new File(session.getServletContext().getRealPath("/") + "profileimg/" + userProfile);
                                     if (s.exists()) {
                                 %>
-                              src="/profileimg/<%=userNm%>.png"
+                              src="/profileimg/<%=userProfile%>"
                                 <%
                                 } else {
                                 %>
@@ -391,10 +392,10 @@
                                             <div class="card-header no-border text-xs-center">
                                                 <img style="width: 200px; height: 200px; border-radius: 50%; margin-bottom: 10px;"
                                                     <%
-                                                        File f = new File("C:\\Users\\data-lab1\\Desktop\\개인프로젝트\\My Portfolio\\backend\\WebContent\\profileimg\\" + CmmUtil.nvl((String) session.getAttribute("userName")));
+                                                        File f = new File(session.getServletContext().getRealPath("/") + "profileimg/" + userProfile);
                                                         if (f.exists()) {
                                                     %>
-                                                     src="/profileimg/<%=userNm%>.png"
+                                                     src="/profileimg/<%=userProfile%>"
                                                     <%
                                                         } else {
                                                     %>

@@ -4,6 +4,7 @@
 <%
     String userNm = CmmUtil.nvl((String) session.getAttribute("userName"));
     String userId = CmmUtil.nvl((String) session.getAttribute("userId"));
+    String userProfile = CmmUtil.nvl((String) session.getAttribute("userProfile"));
 %>
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
@@ -169,7 +170,7 @@
                         ><span class="avatar avatar-online"
                         ><img style="width: 30px; height: 30px;"
                                 <%
-                                    File f = new File("C:\\Users\\data-lab1\\Desktop\\개인프로젝트\\My Portfolio\\backend\\WebContent\\profileimg\\" + CmmUtil.nvl((String) session.getAttribute("userName")));
+                                    File f = new File(session.getServletContext().getRealPath("/") + "profileimg/" + userProfile);
                                     if (f.exists()) {
                                 %>
                               src="/profileimg/<%=userNm%>.png"

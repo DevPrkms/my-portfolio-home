@@ -20,4 +20,12 @@ public interface IProjectMapper {
     List<ProjectDTO> getProjectInfo(ProjectDTO pDTO) throws Exception;
 
     List<WordDTO> getWord(String userId) throws Exception;
+
+    ProjectDTO getProject(ProjectDTO pDTO) throws Exception;
+
+    void updateFileInfo(ProjectDTO pDTO) throws Exception;
+
+    int updateContents(ProjectDTO pDTO) throws Exception;
+
+    int deleteProject(String seq) throws Exception;
 }

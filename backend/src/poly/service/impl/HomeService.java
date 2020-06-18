@@ -45,4 +45,9 @@ public class HomeService implements IHomeService {
         log.info(this.getClass().getName() + " : emCheck IService 호출");
         return homeMapper.emCheck(userEmail);
     }
+
+    @Override
+    public int nmCheck(String userName) throws Exception {
+        return homeMapper.nmCheck(userName);
+    }
 }

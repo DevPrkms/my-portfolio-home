@@ -71,4 +71,33 @@
         FROM project_info
         WHERE reg_ID = #{userId}
     </select>
+
+    <select id="getProject" parameterType="ProjectDTO" resultType="ProjectDTO">
+        SELECT
+            PROJECT_SEQ AS project_seq,
+            PROJECT_NAME AS project_name,
+            PROJECT_CONTENTS AS project_contents,
+            PROJECT_DAY AS project_day,
+            IMG_SAVE_PATH AS img_save_path,
+            FILE_SAVE_PATH AS file_save_path
+        FROM project_info
+        WHERE PROJECT_SEQ = #{project_seq}
+    </select>
+
+    <update id="updateFileInfo">
+        UPDATE project_info
+        SET FILE_SAVE_PATH = #{file_save_path}
+        WHERE PROJECT_SEQ = #{project_seq}
+    </update>
+
+    <update id="updateContents" parameterType="ProjectDTO">
+        UPDATE project_info
+        SET PROJECT_CONTENTS = #{project_contents}
+        WHERE PROJECT_SEQ = #{project_seq}
+    </update>
+
+    <delete id="deleteProject" parameterType="String">
+        DELETE FROM project_info
+        WHERE PROJECT_SEQ = #{seq}
+    </delete>
 </mapper>

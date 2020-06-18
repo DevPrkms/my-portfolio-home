@@ -1,8 +1,15 @@
 <%@ page import="poly.util.CmmUtil" %>
 <%@ page import="java.io.File" %>
+<%@ page import="poly.dto.ProjectDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String userNm = CmmUtil.nvl((String) session.getAttribute("userName"));
+    ProjectDTO pDTO = (ProjectDTO) request.getAttribute("pDTO");
+    String title = pDTO.getProject_name();
+    title = title.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    String content = pDTO.getProject_contents();
+    System.out.println(content);
+    String userProfile = CmmUtil.nvl((String) session.getAttribute("userProfile"));
 %>
 <!DOCTYPE html>
 <html lang="en" data-textdirection="ltr" class="loading">
@@ -111,6 +118,28 @@
             integrity="sha256-r/AaFHrszJtwpe+tHyNi/XCfMxYpbsRg2Uqn0x3s2zc="
             crossorigin="anonymous"
     ></script>
+    <style>
+        #fileinput:active {
+            color: red;
+        }
+
+        #fileinput:hover {
+            color: red;
+        }
+
+        #fileinput:link {
+            color: red;
+        }
+
+        #fileinput:visited {
+            color: red;
+        }
+
+        pre {
+            font-family: "Do Hyeon", sans-serif !important;
+            font-size: 11pt !important;
+        }
+    </style>
 </head>
 <body
         data-open="click"
@@ -168,7 +197,7 @@
                         ><span class="avatar avatar-online"
                         ><img style="width: 30px; height: 30px;"
                                 <%
-                                    File f = new File("C:\\Users\\data-lab1\\Desktop\\개인프로젝트\\My Portfolio\\backend\\WebContent\\profileimg\\" + CmmUtil.nvl((String) session.getAttribute("userName")));
+                                    File f = new File(session.getServletContext().getRealPath("/") + "profileimg/" + userProfile);
                                     if (f.exists()) {
                                 %>
                               src="/profileimg/<%=userNm%>.png"
@@ -217,7 +246,7 @@
                 data-menu="menu-navigation"
                 class="navigation navigation-main"
         >
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a href="/main.do"
                 ><i class="icon-paper"></i
                 ><span
@@ -227,7 +256,7 @@
                 ></a
                 >
             </li>
-            <li class="nav-item">
+            <li class="nav-item has-sub open">
                 <a href="#"
                 ><i class="icon-stack-2"></i
                 ><span data-i18n="nav.page_layouts.main" class="menu-title"
@@ -243,7 +272,7 @@
                         >프로젝트 추가</a
                         >
                     </li>
-                    <li>
+                    <li class="active">
                         <a
                                 href="/plist.do"
                                 data-i18n="nav.page_layouts.2_columns"
@@ -289,19 +318,102 @@
         <div class="content-body">
             <section class="card">
                 <div class="card-header">
-                    <h4 class="card-title">
-                        프로젝트 이름 들어갈 곳
-                    </h4>
+                    <div class="col-sm-6">
+                        <h4 style="color: #778beb;" class="card-title"><%=title%>
+                        </h4>
+                        <span>개발기간 : <%=pDTO.getProject_day()%></span>
+                    </div>
+                    <form action="/deleteProject.do" id="deleteform">
+                        <input type="hidden" name="projectseq" value="<%=pDTO.getProject_seq()%>"/>
+                        <div class="right" style="float: right">
+                            <button id="deleteprj" type="button" class="btn btn-warning mr-1">
+                                <i class="icon-cross2"></i>
+                                삭제
+                            </button>
+                        </div>
+                    </form>
+                    <script>
+                        $("#deleteprj").click(function () {
+                            $("#deleteform").submit();
+                        })
+                    </script>
                 </div>
                 <div class="card-body collapse in">
                     <div class="card-block">
-                        <div
-                                style="width: 30%; border: 1px solid black;"
-                                class="col-sm-6"
-                        >
-                            1of2
-                        </div>
-                        <div style="width: 70%;" class="col-sm-6">2of2</div>
+                        <h5 style="color: #778beb;" class="card-title">메인 이미지</h5>
+                        <% if (pDTO.getImg_save_path() != null) {%>
+                        <img style="" class='card-img-top img-fluid' src='/prjimg/<%=pDTO.getImg_save_path()%>'
+                             alt='Card image cap'/>
+                        <% } else { %>
+                        <img class='card-img-top img-fluid' src='/prjimg/noimage/No_image.png' alt='Card image cap'/>
+                        <% } %>
+                        <hr/>
+                        <h5 style="color: #778beb;" class="card-title">프로젝트 설명 <a href="#" id="content-mod"><i
+                                style="color: gray" class="icon-gear"></i></a></h5>
+                        <pre id="prev_contents"><%=content = content.replaceAll("<br/>", "\n").replaceAll("<", "&lt;").replaceAll(">", "&gt;")%></pre>
+                        <form action="/updateContents.do" id="mod-contents" style="display: none;">
+                            <input type="hidden" name="projectseq" value="<%=pDTO.getProject_seq()%>"/>
+                            <textarea wrap="hard" name="mod-contents" rows="10"
+                                      style="width: 100%; border: none;"><%=content = content.replaceAll("<br/>", "\n").replaceAll("<", "&lt;").replaceAll(">", "&gt;")%></textarea>
+                            <div class="form-actions right">
+                                <button type="button" class="btn btn-warning mr-1" onclick="window.location.reload();">
+                                    <i class="icon-cross2"></i>
+                                    취소
+                                </button>
+                                <button
+                                        type="button"
+                                        id="modifyc"
+                                        class="btn btn-primary"
+                                >
+                                    <i class="icon-check2"></i>
+                                    저장
+                                </button>
+                            </div>
+                        </form>
+                        <script>
+                            $("#content-mod").click(function () {
+                                $("#prev_contents").hide();
+                                $("#mod-contents").show();
+                            });
+
+                            $("#modifyc").click(function () {
+                                $("#mod-contents").submit();
+                            })
+                        </script>
+                        <hr/>
+                        <% if (pDTO.getFile_save_path() != null) { %>
+                        <a href="/projectfile/<%=pDTO.getFile_save_path()%>" download>
+                            <span><%=pDTO.getProject_name()%></span>
+                        </a>
+                        <% } else { %>
+                        <form id="fileinputform" action="/insertFileInfo.do" enctype="multipart/form-data"
+                              method="post">
+                            <a id="fileinput" href="#">
+                                <span>프로젝트 파일을 등록해주세요.</span>
+                            </a>
+                            <br/>
+                            <div id="projectfile" class="form-group" style="display: none">
+                                <input type="file" name="projectfile">
+                                <div class="form-actions right">
+                                    <button type="button" class="btn btn-primary" id="filebtn">
+                                        <i class="icon-check2"></i>
+                                        등록
+                                    </button>
+                                </div>
+                            </div>
+                            <input type="hidden" value="<%=pDTO.getProject_seq()%>" name="projectseq"/>
+                            <input type="hidden" value="<%=title%>" name="projectname"/>
+                        </form>
+                        <% } %>
+                        <script>
+                            $("#fileinput").click(function () {
+                                $("#projectfile").show();
+                            })
+
+                            $("#filebtn").click(function () {
+                                $("#fileinputform").submit();
+                            })
+                        </script>
                     </div>
                 </div>
             </section>
