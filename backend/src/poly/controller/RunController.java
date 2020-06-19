@@ -4,13 +4,16 @@ import org.apache.log4j.Logger;
 import org.rosuda.REngine.Rserve.RConnection;
 import org.rosuda.REngine.Rserve.RserveException;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@Component
+@Controller
 public class RunController {
 
     private Logger log = Logger.getLogger(this.getClass());
 
-    public void RConnect() throws RserveException {
+    @RequestMapping(value = "RConnect")
+    public String RConnect() throws RserveException {
         System.out.println("RConnect 연결");
         RConnection c = new RConnection();
         c.eval("library(tidyverse)");
@@ -23,5 +26,7 @@ public class RunController {
         c.eval("library(wordcloud)");
         c.close();
         System.out.println("RConnect 연결 끝");
+
+        return "/home";
     }
 }

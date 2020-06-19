@@ -57,6 +57,7 @@ public class ProjectController {
         pcontents = pcontents.replaceAll("\n", "<br/>");
         System.out.println("pcontents : " + pcontents);
         String regid = request.getParameter("regid");
+        String rcontents = pcontents.replaceAll("<[^>]*>", " ");
 
         String i_name = pname.replaceAll(match, "");
 
@@ -76,6 +77,7 @@ public class ProjectController {
         pDTO.setProject_name(pname);
         pDTO.setProject_day(ptime);
         pDTO.setProject_contents(pcontents);
+        pDTO.setR_contents(rcontents);
         pDTO.setReg_id(regid);
         if (!ext.equals("")) {
             pDTO.setImg_save_path(saveFileName);

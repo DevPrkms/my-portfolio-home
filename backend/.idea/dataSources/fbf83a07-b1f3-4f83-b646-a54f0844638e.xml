@@ -942,104 +942,109 @@
       <DataType>varchar(5000)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="269" parent="236" name="user_cascade">
+    <column id="269" parent="236" name="R_CONTENTS">
+      <Position>11</Position>
+      <DataType>varchar(5000)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="270" parent="236" name="user_cascade">
       <ColNames>REG_ID</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="270" parent="236" name="PRIMARY">
+    <key id="271" parent="236" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>PROJECT_SEQ</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="271" parent="236" name="user_cascade">
+    <foreign-key id="272" parent="236" name="user_cascade">
       <ColNames>REG_ID</ColNames>
       <RefTableName>user_info</RefTableName>
       <RefColNames>USER_ID</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="272" parent="237" name="USER_ID">
+    <column id="273" parent="237" name="USER_ID">
       <Position>1</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="273" parent="237" name="USER_PASSWORD">
+    <column id="274" parent="237" name="USER_PASSWORD">
       <Position>2</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="274" parent="237" name="USER_NAME">
+    <column id="275" parent="237" name="USER_NAME">
       <Position>3</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="275" parent="237" name="USER_EMAIL">
+    <column id="276" parent="237" name="USER_EMAIL">
       <Position>4</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="276" parent="237" name="USER_PHONE">
+    <column id="277" parent="237" name="USER_PHONE">
       <Position>5</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="277" parent="237" name="REG_DT">
+    <column id="278" parent="237" name="REG_DT">
       <Position>6</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="278" parent="237" name="REG_ID">
+    <column id="279" parent="237" name="REG_ID">
       <Position>7</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="279" parent="237" name="CHG_DT">
+    <column id="280" parent="237" name="CHG_DT">
       <Position>8</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>CURRENT_TIMESTAMP</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="280" parent="237" name="CHG_ID">
+    <column id="281" parent="237" name="CHG_ID">
       <Position>9</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="281" parent="237" name="EMAIL_VAILD">
+    <column id="282" parent="237" name="EMAIL_VAILD">
       <Position>10</Position>
       <DataType>varchar(1)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;N&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="282" parent="237" name="USER_PROFILE">
+    <column id="283" parent="237" name="USER_PROFILE">
       <Position>11</Position>
       <DataType>varchar(5000)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="283" parent="237" name="USER_GIT">
+    <column id="284" parent="237" name="USER_GIT">
       <Position>12</Position>
       <DataType>varchar(100)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="284" parent="237" name="USER_FACEBOOK">
+    <column id="285" parent="237" name="USER_FACEBOOK">
       <Position>13</Position>
       <DataType>varchar(100)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="285" parent="237" name="USER_INSTAGRAM">
+    <column id="286" parent="237" name="USER_INSTAGRAM">
       <Position>14</Position>
       <DataType>varchar(100)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="286" parent="237" name="PRIMARY">
+    <key id="287" parent="237" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>USER_ID</ColNames>
       <Primary>1</Primary>

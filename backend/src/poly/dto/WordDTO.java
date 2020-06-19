@@ -3,14 +3,14 @@ package poly.dto;
 public class WordDTO {
     private String Word;
     private String WordCount;
-    private String project_contents;
+    private String r_contents;
 
-    public String getProject_contents() {
-        return project_contents;
+    public String getR_contents() {
+        return r_contents;
     }
 
-    public void setProject_contents(String project_contents) {
-        this.project_contents = project_contents;
+    public void setR_contents(String r_contents) {
+        this.r_contents = r_contents;
     }
 
     public String getWord() {

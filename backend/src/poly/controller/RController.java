@@ -31,6 +31,7 @@ public class RController {
         RConnection c = new RConnection();
         log.info("R연결 완료");
         String userId = CmmUtil.nvl((String) request.getParameter("userId"));
+        log.info("userId : " + userId);
         log.info("userId request로 받음");
         WordDTO wDTO = new WordDTO();
         List<WordDTO> sList = new ArrayList<>();
@@ -39,6 +40,7 @@ public class RController {
 
         rList = projectService.getWord(userId);
         log.info("컨텐츠 가져옴");
+        log.info(rList.get(0).getR_contents());
         if (rList.size() == 0) {
             log.info("컨텐츠 없음");
             sList = new ArrayList<>();
@@ -46,10 +48,11 @@ public class RController {
             log.info("R분석 시작");
             String[] sArr = new String[rList.size()];
             for (int i = 0; i < rList.size(); i++) {
-                sArr[i] = rList.get(i).getProject_contents();
+                sArr[i] = rList.get(i).getR_contents();
+                log.info(sArr[i]);
             }
             c.assign("sArr", sArr);
-            c.eval("m_df <- sArr %>% SimplePos09 %>% melt %>% as_tibble %>% select(2,1)");
+            c.eval("m_df <- sArr %>% SimplePos09 %>% melt %>% as_tibble %>% select(3,1)");
             c.eval("m_df <- m_df %>% mutate(noun=str_match(value, '([A-Z|a-z|0-9|가-힣]+)/N')[,2]) %>% na.omit");
             c.eval("m_df <- m_df %>% count(noun, sort=TRUE)");
             c.eval("m_df <- filter(m_df,nchar(noun)>=2)");

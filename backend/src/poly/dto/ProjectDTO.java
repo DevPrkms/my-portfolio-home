@@ -11,6 +11,15 @@ public class ProjectDTO {
     private String chg_id;
     private String img_save_path;
     private String file_save_path;
+    private String r_contents;
+
+    public String getR_contents() {
+        return r_contents;
+    }
+
+    public void setR_contents(String r_contents) {
+        this.r_contents = r_contents;
+    }
 
     public String getImg_save_path() {
         return img_save_path;

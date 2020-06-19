@@ -10,14 +10,16 @@
                            REG_DT,
                            REG_ID,
                            CHG_ID,
-                           IMG_SAVE_PATH)
+                           IMG_SAVE_PATH,
+                           R_CONTENTS)
         VALUES (#{project_name},
                 #{project_day},
                 #{project_contents},
                 SYSDATE(),
                 #{reg_id},
                 #{reg_id},
-                #{img_save_path})
+                #{img_save_path},
+                #{r_contents})
     </insert>
 
     <select id="selectProjectInfo" parameterType="String" resultType="Integer">
@@ -67,7 +69,7 @@
 
     <select id="getWord" parameterType="String" resultType="WordDTO">
         SELECT
-            PROJECT_CONTENTS AS project_contents
+            R_CONTENTS AS r_contents
         FROM project_info
         WHERE reg_ID = #{userId}
     </select>
