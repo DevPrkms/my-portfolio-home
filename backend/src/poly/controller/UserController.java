@@ -36,7 +36,7 @@ public class UserController {
     @Resource(name = "UserMapper")
     private IUserMapper userMapper;
 
-    final private String FILE_UPLOAD_SAVE_PATH = "C:/Users/data-lab1/Desktop/개인프로젝트/My Portfolio/backend/WebContent/profileimg";
+    final private String FILE_UPLOAD_SAVE_PATH = "/usr/local/apache-tomcat-8.5.55/webapps/ROOT/profileimg";
 
     @RequestMapping(value = "insertProgram")
     @ResponseBody

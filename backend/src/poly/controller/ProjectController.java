@@ -40,8 +40,8 @@ public class ProjectController {
     @Resource(name = "ProjectMapper")
     private IProjectMapper projectMapper;
 
-    final private String FILE_UPLOAD_SAVE_PATH = "C:/Users/data-lab1/Desktop/개인프로젝트/My Portfolio/backend/WebContent/prjimg";
-    final private String FILE_UPLOAD_SAVE_PATH_FILE = "C:/Users/data-lab1/Desktop/개인프로젝트/My Portfolio/backend/WebContent/projectfile";
+    final private String FILE_UPLOAD_SAVE_PATH = "/usr/local/apache-tomcat-8.5.55/webapps/ROOT/prjimg";
+    final private String FILE_UPLOAD_SAVE_PATH_FILE = "/usr/local/apache-tomcat-8.5.55/webapps/ROOT/projectfile";
 
     @RequestMapping(value = "/project/add", method = RequestMethod.POST)
     public String add(HttpServletRequest request, HttpServletResponse response, Model model, @RequestParam(value = "prjimg") MultipartFile mf) throws Exception {

@@ -28,7 +28,7 @@ public class RController {
     @ResponseBody
     public List<WordDTO> rConnect(HttpServletRequest request, HttpServletResponse response) throws Exception {
         log.info("rConnect 호출");
-        RConnection c = new RConnection();
+        RConnection f = new RConnection();
         log.info("R연결 완료");
         String userId = CmmUtil.nvl((String) request.getParameter("userId"));
         log.info("userId : " + userId);
@@ -40,7 +40,7 @@ public class RController {
 
         rList = projectService.getWord(userId);
         log.info("컨텐츠 가져옴");
-        log.info(rList.get(0).getR_contents());
+        log.info(rList.size());
         if (rList.size() == 0) {
             log.info("컨텐츠 없음");
             sList = new ArrayList<>();
@@ -51,14 +51,32 @@ public class RController {
                 sArr[i] = rList.get(i).getR_contents();
                 log.info(sArr[i]);
             }
-            c.assign("sArr", sArr);
-            c.eval("m_df <- sArr %>% SimplePos09 %>% melt %>% as_tibble %>% select(3,1)");
-            c.eval("m_df <- m_df %>% mutate(noun=str_match(value, '([A-Z|a-z|0-9|가-힣]+)/N')[,2]) %>% na.omit");
-            c.eval("m_df <- m_df %>% count(noun, sort=TRUE)");
-            c.eval("m_df <- filter(m_df,nchar(noun)>=2)");
-//            c.eval("m_df <- filter(m_df,n>=2");
-            REXP x = c.eval("m_df$noun");
-            REXP y = c.eval("m_df$n");
+            f.eval("library(dbplyr)");
+            f.eval("library(tidyverse)");
+            f.eval("library(KoNLP)");
+            f.eval("useNIADic()");
+            f.eval("library(stringr)");
+            f.eval("library(reshape2)");
+            f.eval("library(RColorBrewer)");
+            f.eval("library(wordcloud)");
+
+            f.assign("sArr", sArr);
+
+            // AWS Rserve 구문 (%>% 사용 불가능)
+            f.eval("n_df <- select(as_tibble(melt(SimplePos09(sArr))),2,1)");
+            f.eval("n_df <- na.omit(mutate(n_df,noun=str_match(value, '([A-Z|a-z|0-9|가-힣]+)/N')[,2]))");
+            f.eval("n_df <- count(n_df,noun, sort=TRUE)");
+            f.eval("n_df <- filter(n_df,nchar(noun)>=2)");
+
+            /* Window Rserve 구문 (%>% 사용 가능)
+            f.eval("m_df <- sArr %>% SimplePos09 %>% melt %>% as_tibble %>% select(2,1)");
+            f.eval("m_df <- m_df %>% mutate(noun=str_match(value, '([A-Z|a-z|0-9|가-힣]+)/N')[,2]) %>% na.omit");
+            f.eval("m_df <- m_df %>% count(noun, sort=TRUE)");
+            f.eval("m_df <- filter(m_df,nchar(noun)>=2)");
+             */
+
+            REXP x = f.eval("n_df$noun");
+            REXP y = f.eval("n_df$n");
             String[] noun = x.asStrings();
             String[] count = y.asStrings();
             for (int i = 0; i < noun.length; i++) {
@@ -70,7 +88,7 @@ public class RController {
                 wDTO = null;
             }
         }
-        c.close();
+        f.close();
         log.info("R끝");
         return sList;
     }

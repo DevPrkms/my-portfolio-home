@@ -227,8 +227,7 @@
                         ><span class="avatar avatar-online"
                         ><img style="width: 30px; height: 30px;"
                                 <%
-                                    File s = new File(session.getServletContext().getRealPath("/") + "profileimg/" + userProfile);
-                                    if (s.exists()) {
+                                    if (userProfile != "") {
                                 %>
                               src="/profileimg/<%=userProfile%>"
                                 <%
@@ -392,8 +391,7 @@
                                             <div class="card-header no-border text-xs-center">
                                                 <img style="width: 200px; height: 200px; border-radius: 50%; margin-bottom: 10px;"
                                                     <%
-                                                        File f = new File(session.getServletContext().getRealPath("/") + "profileimg/" + userProfile);
-                                                        if (f.exists()) {
+                                                        if(userProfile != ""){
                                                     %>
                                                      src="/profileimg/<%=userProfile%>"
                                                     <%

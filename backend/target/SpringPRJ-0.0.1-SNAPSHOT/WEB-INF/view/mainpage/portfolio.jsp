@@ -192,10 +192,9 @@
                         ><span class="avatar avatar-online"
                         ><img style="width: 30px; height: 30px;"
                                 <%
-                                    File f = new File(session.getServletContext().getRealPath("/") + "profileimg/" + userProfile);
-                                    if (f.exists()) {
+                                    if (userProfile != "") {
                                 %>
-                              src="/profileimg/<%=userNm%>.png"
+                              src="/profileimg/<%=userProfile%>"
                                 <%
                                 } else {
                                 %>

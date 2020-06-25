@@ -11,7 +11,7 @@
 			EMAIL_VAILD AS email_vaild,
 			USER_PROFILE AS user_profile
 		FROM
-			USER_INFO
+			user_info
 		WHERE
 			USER_ID = #{user_id}
 		AND
@@ -20,7 +20,7 @@
 
 	<select id="idCheck" parameterType="String" resultType="Integer">
 		SELECT COUNT(*)
-		FROM USER_INFO
+		FROM user_info
 		WHERE
 			USER_ID = #{userId}
 	</select>
@@ -28,7 +28,7 @@
 	<insert id="userReg" parameterType="UserDTO">
 		INSERT
 		INTO
-		USER_INFO
+		user_info
 		(
 			USER_ID,
 			USER_PASSWORD,
@@ -53,7 +53,7 @@
 	</insert>
 
 	<update id="emailvaild" parameterType="String">
-		UPDATE USER_INFO
+		UPDATE user_info
 		SET EMAIL_VAILD = 'Y'
 		WHERE
 			USER_ID = #{userId}
@@ -61,14 +61,14 @@
 
 	<select id="emCheck" parameterType="String" resultType="Integer">
 		SELECT COUNT(*)
-		FROM USER_INFO
+		FROM user_info
 		WHERE
 			USER_EMAIL = #{userEmail}
 	</select>
 
 	<select id="nmCheck" parameterType="String" resultType="Integer">
 		SELECT COUNT(*)
-		FROM USER_INFO
+		FROM user_info
 		WHERE
 			USER_NAME = #{userName}
 	</select>

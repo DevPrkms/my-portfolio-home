@@ -137,7 +137,7 @@
     <div class="d-flex flex-column">
 
         <div class="profile">
-            <% if (userProfile != null) { %>
+            <% if (userProfile != "") { %>
             <img style="width: 150px; height: 150px;" src="/profileimg/<%=userProfile%>" alt=""
                  class="img-fluid rounded-circle">
             <% } else { %>
@@ -174,7 +174,7 @@
 
             <div class="row">
                 <div class="col-lg-4" data-aos="fade-right">
-                    <% if (userProfile != null) { %>
+                    <% if (userProfile != "") { %>
                     <img style="width: 350px; height: 350px;" src="/profileimg/<%=userProfile%>" alt=""
                          class="img-fluid rounded-circle">
                     <% } else { %>

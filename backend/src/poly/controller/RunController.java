@@ -16,15 +16,15 @@ public class RunController {
     public String RConnect() throws RserveException {
         System.out.println("RConnect 연결");
         RConnection c = new RConnection();
-        c.eval("library(tidyverse)");
-        c.eval("library(KoNLP)");
-        c.eval("useNIADic()");
-        c.eval("library(stringr)");
-        c.eval("library(reshape2)");
-        c.eval("library(dbplyr)");
-        c.eval("library(RColorBrewer)");
-        c.eval("library(wordcloud)");
-        c.close();
+//        c.eval("library(dbplyr)");
+//        c.eval("library(tidyverse)");
+//        c.eval("library(KoNLP)");
+//        c.eval("useNIADic()");
+//        c.eval("library(stringr)");
+//        c.eval("library(reshape2)");
+//        c.eval("library(RColorBrewer)");
+//        c.eval("library(wordcloud)");
+//        c.close();
         System.out.println("RConnect 연결 끝");
 
         return "/home";

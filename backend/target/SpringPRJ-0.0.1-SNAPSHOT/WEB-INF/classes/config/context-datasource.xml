@@ -9,11 +9,11 @@
         lazy-init="false">
  
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://localhost:3306/poly_prj?useSSL=false&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC" />
+        <property name="url" value="jdbc:mysql://52.78.99.99:3306/myportfolio?useSSL=false&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC" />
         <!-- 서버에 연결할때의 value값 -->
         <!-- jdbc:mysql://192.168.175.54:3306/evergreen2019?useSSL=false&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC -->
         <property name="username" value="root" />
-        <property name="password" value="root" />
+        <property name="password" value="1011813aS!@" />
     </bean>
     
 </beans>

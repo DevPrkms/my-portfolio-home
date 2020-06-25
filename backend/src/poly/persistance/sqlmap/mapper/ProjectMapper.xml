@@ -4,7 +4,7 @@
 
     <insert id="insertProjectInfo" parameterType="ProjectDTO">
         INSERT
-        INTO PROJECT_INFO (PROJECT_NAME,
+        INTO project_info (PROJECT_NAME,
                            PROJECT_DAY,
                            PROJECT_CONTENTS,
                            REG_DT,
@@ -24,13 +24,13 @@
 
     <select id="selectProjectInfo" parameterType="String" resultType="Integer">
         SELECT PROJECT_SEQ
-        FROM PROJECT_INFO
+        FROM project_info
         WHERE PROJECT_NAME = #{pname}
     </select>
 
     <insert id="insertFileInfo" parameterType="FileDTO">
         INSERT
-        INTO FILE_INFO(PROJECT_SEQ,
+        INTO file_info(PROJECT_SEQ,
                        ORIGINAL_FILE_NAME,
                        STORED_FILE_NAME,
                        FILE_SIZE,
@@ -48,7 +48,7 @@
 
     <select id="pnameCheck" parameterType="String" resultType="Integer">
         SELECT COUNT(*)
-        FROM PROJECT_INFO
+        FROM project_info
         WHERE PROJECT_NAME = #{pname}
     </select>
 
@@ -62,7 +62,7 @@
             CHG_DT,
             IMG_SAVE_PATH
         FROM
-            PROJECT_INFO
+            project_info
         WHERE
             REG_ID = #{reg_id}
     </select>
