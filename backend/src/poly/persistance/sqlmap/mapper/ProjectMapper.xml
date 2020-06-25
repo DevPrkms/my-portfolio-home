@@ -71,7 +71,7 @@
         SELECT
             R_CONTENTS AS r_contents
         FROM project_info
-        WHERE reg_ID = #{userId}
+        WHERE reg_ID = #{userId} AND R_CONTENTS regexp '[가-힣]'
     </select>
 
     <select id="getProject" parameterType="ProjectDTO" resultType="ProjectDTO">

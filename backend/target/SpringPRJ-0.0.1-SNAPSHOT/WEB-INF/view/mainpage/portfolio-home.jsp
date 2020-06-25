@@ -253,15 +253,6 @@
                             alert("error : " + error);
                         }
                     })
-
-                    $("#goto").click(function () {
-                        if (gotocnt == 0) {
-                            alert("프로그래밍 수준 입력 후 이용가능합니다.");
-                            return null;
-                        } else {
-                            alert("이동함");
-                        }
-                    })
                 });
             </script>
 
@@ -317,7 +308,7 @@
                                 $("#prjResult").html(prjResult);
                             } else {
                                 var prjResult = "";
-                                prjResult += ("<h1 style='color: gray; text-align: center'> 등록된 프로젝트가 없습니다. </h1>");
+                                prjResult += ("<h4 class='card-title' style='color: red; text-align: center'> 등록된 프로젝트가 없습니다. </h4>");
 
                                 $("#prjResult").html(prjResult);
                             }

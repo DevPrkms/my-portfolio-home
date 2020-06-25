@@ -63,7 +63,7 @@ public class RController {
             f.assign("sArr", sArr);
 
             // AWS Rserve 구문 (%>% 사용 불가능)
-            f.eval("n_df <- select(as_tibble(melt(SimplePos09(sArr))),2,1)");
+            f.eval("n_df <- select(as_tibble(melt(SimplePos22(sArr,autoSpacing=T))),2,1)");
             f.eval("n_df <- na.omit(mutate(n_df,noun=str_match(value, '([A-Z|a-z|0-9|가-힣]+)/N')[,2]))");
             f.eval("n_df <- count(n_df,noun, sort=TRUE)");
             f.eval("n_df <- filter(n_df,nchar(noun)>=2)");

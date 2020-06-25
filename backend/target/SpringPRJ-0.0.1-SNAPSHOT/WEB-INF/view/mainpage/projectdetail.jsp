@@ -7,6 +7,8 @@
     ProjectDTO pDTO = (ProjectDTO) request.getAttribute("pDTO");
     String title = pDTO.getProject_name();
     title = title.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    String day = pDTO.getProject_day();
+    day = day.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
     String content = pDTO.getProject_contents();
     System.out.println(content);
     String userProfile = CmmUtil.nvl((String) session.getAttribute("userProfile"));
@@ -320,7 +322,7 @@
                     <div class="col-sm-6">
                         <h4 style="color: #778beb;" class="card-title"><%=title%>
                         </h4>
-                        <span>개발기간 : <%=pDTO.getProject_day()%></span>
+                        <span>개발기간 : <%=day%></span>
                     </div>
                     <form action="/deleteProject.do" id="deleteform">
                         <input type="hidden" name="projectseq" value="<%=pDTO.getProject_seq()%>"/>

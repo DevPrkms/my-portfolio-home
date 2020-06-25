@@ -58,6 +58,7 @@ public class ProjectController {
         System.out.println("pcontents : " + pcontents);
         String regid = request.getParameter("regid");
         String rcontents = pcontents.replaceAll("<[^>]*>", " ");
+        rcontents = rcontents.replaceAll("[^가-힣\\s]", "");
 
         String i_name = pname.replaceAll(match, "");
 

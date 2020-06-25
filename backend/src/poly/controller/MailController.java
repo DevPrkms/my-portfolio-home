@@ -27,7 +27,7 @@ public class MailController {
 
         String toMail = CmmUtil.nvl(request.getParameter("userEmail"));
         String userId = CmmUtil.nvl(request.getParameter("userId"));
-        String contents = "아래 링크를 누르시면 가입이 완료됩니다. \n http://localhost:8080/emailvaild.do?userId=" + userId;
+        String contents = "아래 링크를 누르시면 가입이 완료됩니다. \n http://52.78.99.99:8080/emailvaild.do?userId=" + userId;
 
         MailDTO pDTO = new MailDTO();
 

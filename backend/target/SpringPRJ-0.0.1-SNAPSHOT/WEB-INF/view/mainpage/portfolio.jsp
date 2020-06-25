@@ -545,10 +545,10 @@
                                         }
                                     })
 
-                                    $("#goto").click(function () {
+                                    $("#goto").click(function (a) {
                                         if (gotocnt == 0) {
                                             alert("프로그래밍 수준 입력 후 이용가능합니다.");
-                                            return null;
+                                            a.preventDefault();
                                         }
                                     })
                                 });
